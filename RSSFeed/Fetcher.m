@@ -7,7 +7,6 @@
 //
 
 #import "Fetcher.h"
-#import "NewsItem.h"
 
 @interface Fetcher () <NSXMLParserDelegate>
 

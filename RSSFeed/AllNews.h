@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "NewsItem.h"
 
 @interface AllNews : NSObject
 

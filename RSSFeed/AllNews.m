@@ -7,7 +7,6 @@
 //
 
 #import "AllNews.h"
-#import "NewsItem.h"
 
 @implementation AllNews
 

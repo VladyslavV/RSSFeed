@@ -12,7 +12,6 @@
 
 - (instancetype)initWithDict:(NSMutableDictionary*) nodeDict;
 
-
 @property (nonatomic, strong, readonly) NSString* title;
 @property (nonatomic, strong, readonly) NSString* newsDescription;
 @property (nonatomic, strong, readonly) NSString* newsLink;
