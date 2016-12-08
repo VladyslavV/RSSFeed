@@ -10,6 +10,6 @@
 
 @interface FeedView : UIView
 
--(void) updateFeedView;
-
+-(void) setUpView;
+    
 @end

@@ -8,6 +8,7 @@
 
 #import "FeedView.h"
 #import "CustomTableViewCell.h"
+#import "Masonry.h"
 
 @interface FeedView () <UITableViewDelegate, UITableViewDataSource>
 
@@ -22,23 +23,18 @@
         _tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        [self addSubview:self.tableView];
     }
     return _tableView;
 }
 
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self addSubview:self.tableView];
-    }
-    return self;
-}
-
-
--(void) updateFeedView {
-    [self.tableView reloadData];
+-(void) setUpView {
+    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.superview).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.superview).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
 }
 
 #pragma mark - TableView Delegate Methods
@@ -51,7 +47,6 @@
     CustomTableViewCell* cell = [[CustomTableViewCell alloc] init];
     
     
-
     cell.backgroundColor = [UIColor blueColor];
     return cell;
 }
