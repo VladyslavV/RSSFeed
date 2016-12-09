@@ -54,7 +54,7 @@
     
     self.descriptionLabel.backgroundColor = [UIColor greenColor];
     self.titleLabel.backgroundColor = [UIColor redColor];
-    //NSDictionary *elementsDict = NSDictionaryOfVariableBindings(_titleLabel, _descriptionLabel);
+
     [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(4);
         make.leading.equalTo(self.mas_leading).with.offset(4);
