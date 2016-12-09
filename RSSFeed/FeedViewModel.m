@@ -8,6 +8,7 @@
 
 #import "FeedViewModel.h"
 #import "Fetcher.h"
+#import "CustomTableViewCell.h"
 
 @interface FeedViewModel() <FetcherDelegate>
 
@@ -26,17 +27,34 @@
     return _fetcher;
 }
 
+-(void) updateModel {
+    [self.fetcher fetchData];
+}
+
 #pragma mark - Fetcher Delegate
 
 -(void) allNewsParsed:(AllNews *)allNews {
     self.allNews = allNews;
-    NewsItem* item = allNews.data[3];
-    NSLog(@"%@", item.title);
+    [self.delegate modelWasUpdated];
 }
 
--(void) updateModel {
-    [self.fetcher fetchData];
+#pragma mark - Table View
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.allNews.data.count;
 }
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CustomTableViewCell* cell = [[CustomTableViewCell alloc] init];
+    NewsItem* item = self.allNews.data[indexPath.row];
+    cell.titleLabel.text = item.title;
+    cell.descriptionLabel.text = item.newsDescription;
+    return cell;
+}
+
+
+
+
 
 
 @end

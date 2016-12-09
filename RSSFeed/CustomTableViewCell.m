@@ -11,10 +11,6 @@
 
 @interface CustomTableViewCell ()
 
-
-@property (strong, nonatomic) UILabel* titleLabel;
-@property (strong, nonatomic) UILabel* descriptionLabel;
-
 @end
 
 @implementation CustomTableViewCell
@@ -48,18 +44,19 @@
 }
 
 -(void) setUpCell {
+    
     self.separatorInset = UIEdgeInsetsZero;
     [self addSubview:self.titleLabel];
     [self addSubview:self.descriptionLabel];
     
     self.descriptionLabel.backgroundColor = [UIColor greenColor];
     self.titleLabel.backgroundColor = [UIColor redColor];
-
+    
     [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(4);
         make.leading.equalTo(self.mas_leading).with.offset(4);
         make.trailing.equalTo(self.mas_trailing).with.offset(-4);
-        make.bottom.equalTo(self.mas_centerY).with.offset(-4);
+        make.bottom.equalTo(self.mas_centerY).with.offset(0);
     }];
     
     [self.descriptionLabel mas_remakeConstraints:^(MASConstraintMaker *make) {

@@ -8,13 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "AllNews.h"
-#import "FeedView.h"
+#import <UIKit/UIKit.h>
 
-@interface FeedViewModel : NSObject 
+@protocol FeedViewModelDelegate <NSObject>
+
+-(void) modelWasUpdated;
+
+@end
+
+@interface FeedViewModel : NSObject <UITableViewDataSource>
+
+@property (nonatomic, weak) id <FeedViewModelDelegate> delegate;
 
 -(void) updateModel;
-
-@property (weak, nonatomic) FeedView* feedView;
 
 @end
 

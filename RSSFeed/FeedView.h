@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FeedViewModel.h"
 
 @interface FeedView : UIView
-    
+
+-(void) update;
+
+@property(strong, nonatomic) FeedViewModel* feedViewModel;
+
 @end

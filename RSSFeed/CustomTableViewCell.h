@@ -10,5 +10,7 @@
 
 @interface CustomTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) UILabel* titleLabel;
+@property (strong, nonatomic) UILabel* descriptionLabel;
 
 @end

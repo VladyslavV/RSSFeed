@@ -28,6 +28,10 @@
     return _tableView;
 }
 
+-(void) update {
+    [self.tableView reloadData];
+}
+
 #pragma mark - Trait Collection Delegate Methods
 
 -(void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -44,15 +48,11 @@
 #pragma mark - TableView Delegate Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return [self.feedViewModel tableView:self.tableView numberOfRowsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CustomTableViewCell* cell = [[CustomTableViewCell alloc] init];
-    
-    
-    cell.backgroundColor = [UIColor blueColor];
-    return cell;
+    return [self.feedViewModel tableView:self.tableView cellForRowAtIndexPath:indexPath];
 }
 
 

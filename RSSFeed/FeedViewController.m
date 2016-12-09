@@ -11,7 +11,7 @@
 #import "FeedViewModel.h"
 
 
-@interface FeedViewController ()
+@interface FeedViewController () <FeedViewModelDelegate>
 
 //UI
 @property (strong, nonatomic) FeedView* feedView;
@@ -23,6 +23,11 @@
 
 @implementation FeedViewController
 
+#pragma mark - FeedViewModel Delegate
+
+-(void) modelWasUpdated {
+    [self.feedView update];
+}
 
 #pragma mark - Init Variables
 
@@ -30,6 +35,7 @@
     if (_feedView == nil) {
         _feedView = [FeedView new];
         _feedView.translatesAutoresizingMaskIntoConstraints = NO;
+        _feedView.feedViewModel = self.feedViewModel;
     }
     return _feedView;
 }
@@ -37,7 +43,7 @@
 -(FeedViewModel*) feedViewModel {
     if (_feedViewModel == nil) {
         _feedViewModel = [FeedViewModel new];
-        _feedViewModel.feedView = _feedView;
+        _feedViewModel.delegate = self;
     }
     return _feedViewModel;
 }
@@ -47,6 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.feedView];
+    [self.feedViewModel updateModel];
 }
 
 
