@@ -7,6 +7,7 @@
 //
 
 #import "CustomTableViewCell.h"
+#import "Masonry.h"
 
 @interface CustomTableViewCell ()
 
@@ -51,22 +52,22 @@
     [self addSubview:self.titleLabel];
     [self addSubview:self.descriptionLabel];
     
-    NSDictionary *elementsDict = NSDictionaryOfVariableBindings(_titleLabel, _descriptionLabel);
+    self.descriptionLabel.backgroundColor = [UIColor greenColor];
+    self.titleLabel.backgroundColor = [UIColor redColor];
+    //NSDictionary *elementsDict = NSDictionaryOfVariableBindings(_titleLabel, _descriptionLabel);
+    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).with.offset(4);
+        make.leading.equalTo(self.mas_leading).with.offset(4);
+        make.trailing.equalTo(self.mas_trailing).with.offset(-4);
+        make.bottom.equalTo(self.mas_centerY).with.offset(-4);
+    }];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[_titleLabel]-4-[_descriptionLabel]-4-|"
-                                                                options:NSLayoutFormatDirectionLeadingToTrailing
-                                                                metrics:nil
-                                                                  views:elementsDict]];
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_titleLabel]-|"
-                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
-                                                                 metrics:nil
-                                                                   views:elementsDict]];
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_descriptionLabel]-|"
-                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
-                                                                 metrics:nil
-                                                                   views:elementsDict]];
+    [self.descriptionLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.titleLabel.mas_bottom).with.offset(4);
+        make.bottom.equalTo(self.mas_bottom).with.offset(-4);
+        make.leading.equalTo(self.mas_leading).with.offset(4);
+        make.trailing.equalTo(self.mas_trailing).with.offset(-4);
+    }];
 }
 
 

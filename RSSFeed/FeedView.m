@@ -10,7 +10,7 @@
 #import "CustomTableViewCell.h"
 #import "Masonry.h"
 
-@interface FeedView () <UITableViewDelegate, UITableViewDataSource>
+@interface FeedView () <UITableViewDelegate, UITableViewDataSource, UITraitEnvironment>
 
 @property (nonatomic, strong) UITableView* tableView;
 
@@ -28,12 +28,16 @@
     return _tableView;
 }
 
--(void) setUpView {
-    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.superview).insets(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
+#pragma mark - Trait Collection Delegate Methods
+
+-(void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.superview).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+        make.bottom.leading.trailing.equalTo(self);
+        make.top.equalTo(self.mas_top).with.offset(20);
+    }];
+    
+    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.superview);
     }];
 }
 
