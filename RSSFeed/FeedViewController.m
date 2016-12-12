@@ -7,21 +7,29 @@
 //
 
 #import "FeedViewController.h"
-#import "FeedView.h"
-#import "FeedViewModel.h"
+#import "FeedViewDetailVC.h"
 
 
-@interface FeedViewController () <FeedViewModelDelegate>
-
+@interface FeedViewController () 
 //UI
 @property (strong, nonatomic) FeedView* feedView;
 
 //ViewModel
 @property (strong, nonatomic) FeedViewModel* feedViewModel;
 
+
 @end
 
 @implementation FeedViewController
+
+
+#pragma mark - FeedView Delegate
+
+-(void) cellAtRowWasSelected:(NSInteger)cell {
+    FeedDetailViewModel* model = [self.feedViewModel createFeedDetailViewModelForCell:cell];
+    FeedViewDetailVC* vc = [[FeedViewDetailVC alloc] initWithViewModel:model];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark - FeedViewModel Delegate
 
@@ -36,6 +44,7 @@
         _feedView = [FeedView new];
         _feedView.translatesAutoresizingMaskIntoConstraints = NO;
         _feedView.feedViewModel = self.feedViewModel;
+        _feedView.delegate = self;
     }
     return _feedView;
 }

@@ -17,12 +17,15 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[FeedViewController alloc] init];
+    [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window makeKeyAndVisible];
     
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[FeedViewController alloc] init]];
+
+    [self.window setRootViewController:navigationController];
+
     return YES;
 }
 

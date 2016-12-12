@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		31162C7A1DF8527A00AD1DAA /* FeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31162C791DF8527A00AD1DAA /* FeedView.m */; };
 		31162C7E1DF86C2C00AD1DAA /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */; };
+		31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */; };
+		31573FC31DFAF86B00882D43 /* FeedDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC21DFAF86B00882D43 /* FeedDetailViewModel.m */; };
+		31573FC61DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC51DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m */; };
 		31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D1D2FF1DF9738F00A3D615 /* FeedViewModel.m */; };
 		31DCD2591DF6BA9C003601C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DCD2581DF6BA9C003601C8 /* main.m */; };
 		31DCD25C1DF6BA9C003601C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DCD25B1DF6BA9C003601C8 /* AppDelegate.m */; };
@@ -26,6 +29,12 @@
 		31162C791DF8527A00AD1DAA /* FeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedView.m; sourceTree = "<group>"; };
 		31162C7C1DF86C2C00AD1DAA /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		31573FBD1DFAF81900882D43 /* FeedViewDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewDetailVC.h; sourceTree = "<group>"; };
+		31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewDetailVC.m; sourceTree = "<group>"; };
+		31573FC11DFAF86B00882D43 /* FeedDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedDetailViewModel.h; sourceTree = "<group>"; };
+		31573FC21DFAF86B00882D43 /* FeedDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedDetailViewModel.m; sourceTree = "<group>"; };
+		31573FC41DFE9D6E00882D43 /* UITraitCollection+MKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITraitCollection+MKAdditions.h"; sourceTree = "<group>"; };
+		31573FC51DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITraitCollection+MKAdditions.m"; sourceTree = "<group>"; };
 		31D1D2FE1DF9738F00A3D615 /* FeedViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewModel.h; sourceTree = "<group>"; };
 		31D1D2FF1DF9738F00A3D615 /* FeedViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewModel.m; sourceTree = "<group>"; };
 		31DCD2541DF6BA9C003601C8 /* RSSFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +67,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31573FC01DFAF82700882D43 /* Feed Detail VC */ = {
+			isa = PBXGroup;
+			children = (
+				31573FBD1DFAF81900882D43 /* FeedViewDetailVC.h */,
+				31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */,
+				31573FC11DFAF86B00882D43 /* FeedDetailViewModel.h */,
+				31573FC21DFAF86B00882D43 /* FeedDetailViewModel.m */,
+			);
+			name = "Feed Detail VC";
+			sourceTree = "<group>";
+		};
+		31573FC71DFE9D8000882D43 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				31573FC41DFE9D6E00882D43 /* UITraitCollection+MKAdditions.h */,
+				31573FC51DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		317AC1A31DF835BD001645FC /* Fetcher */ = {
 			isa = PBXGroup;
 			children = (
@@ -78,7 +107,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		317AC1A51DF835CD001645FC /* ViewController */ = {
+		317AC1A51DF835CD001645FC /* Feed View Controller */ = {
 			isa = PBXGroup;
 			children = (
 				31DCD25D1DF6BA9C003601C8 /* FeedViewController.h */,
@@ -90,7 +119,7 @@
 				31162C7C1DF86C2C00AD1DAA /* CustomTableViewCell.h */,
 				31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */,
 			);
-			name = ViewController;
+			name = "Feed View Controller";
 			sourceTree = "<group>";
 		};
 		31DCD24B1DF6BA9C003601C8 = {
@@ -114,7 +143,9 @@
 		31DCD2561DF6BA9C003601C8 /* RSSFeed */ = {
 			isa = PBXGroup;
 			children = (
-				317AC1A51DF835CD001645FC /* ViewController */,
+				31573FC71DFE9D8000882D43 /* Categories */,
+				31573FC01DFAF82700882D43 /* Feed Detail VC */,
+				317AC1A51DF835CD001645FC /* Feed View Controller */,
 				317AC1A31DF835BD001645FC /* Fetcher */,
 				317AC1A41DF835C4001645FC /* Model */,
 				31DCD2571DF6BA9C003601C8 /* Supporting Files */,
@@ -271,14 +302,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */,
 				31162C7A1DF8527A00AD1DAA /* FeedView.m in Sources */,
 				31DCD25F1DF6BA9C003601C8 /* FeedViewController.m in Sources */,
 				31162C7E1DF86C2C00AD1DAA /* CustomTableViewCell.m in Sources */,
 				31DCD2701DF6F0C2003601C8 /* Fetcher.m in Sources */,
 				31DCD25C1DF6BA9C003601C8 /* AppDelegate.m in Sources */,
+				31573FC61DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m in Sources */,
 				31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */,
 				31DCD2761DF72814003601C8 /* NewsItem.m in Sources */,
 				31DCD2591DF6BA9C003601C8 /* main.m in Sources */,
+				31573FC31DFAF86B00882D43 /* FeedDetailViewModel.m in Sources */,
 				31DCD2731DF727E3003601C8 /* AllNews.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +338,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -352,6 +387,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

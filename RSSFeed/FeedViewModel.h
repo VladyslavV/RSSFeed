@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AllNews.h"
 #import <UIKit/UIKit.h>
+#import "FeedDetailViewModel.h"
 
 @protocol FeedViewModelDelegate <NSObject>
 
@@ -21,6 +22,8 @@
 @property (nonatomic, weak) id <FeedViewModelDelegate> delegate;
 
 -(void) updateModel;
+
+-(FeedDetailViewModel*) createFeedDetailViewModelForCell:(NSInteger) cellIndex;
 
 @end
 

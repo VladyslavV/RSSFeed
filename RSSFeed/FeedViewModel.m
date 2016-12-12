@@ -40,6 +40,7 @@
 
 #pragma mark - Table View
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.allNews.data.count;
 }
@@ -52,7 +53,13 @@
     return cell;
 }
 
+#pragma mark - Create Feed Detail View Model
 
+-(FeedDetailViewModel*) createFeedDetailViewModelForCell:(NSInteger) cellIndex {
+    NewsItem* item = self.allNews.data[cellIndex];
+    FeedDetailViewModel* feedDetailViewModel = [[FeedDetailViewModel alloc] initWithItem:item];
+    return feedDetailViewModel;
+}
 
 
 

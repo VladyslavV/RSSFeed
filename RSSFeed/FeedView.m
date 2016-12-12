@@ -23,6 +23,8 @@
         _tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.estimatedRowHeight = 300.0;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
         [self addSubview:self.tableView];
     }
     return _tableView;
@@ -35,9 +37,10 @@
 #pragma mark - Trait Collection Delegate Methods
 
 -(void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.leading.trailing.equalTo(self);
-        make.top.equalTo(self.mas_top).with.offset(20);
+        make.top.equalTo(self.mas_top).with.offset(0);
     }];
     
     [self mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -46,6 +49,14 @@
 }
 
 #pragma mark - TableView Delegate Methods
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.delegate cellAtRowWasSelected:indexPath.row];
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.feedViewModel tableView:self.tableView numberOfRowsInSection:section];

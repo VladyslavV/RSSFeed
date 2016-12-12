@@ -19,6 +19,7 @@
     if (_titleLabel == nil) {
         _titleLabel = [UILabel new];
         [_titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [_titleLabel setFont:[UIFont systemFontOfSize:18]];
         _titleLabel.text = @"Title";
     }
     return _titleLabel;
@@ -28,6 +29,7 @@
     if (_descriptionLabel == nil) {
         _descriptionLabel = [UILabel new];
         [_descriptionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [_descriptionLabel setFont:[UIFont systemFontOfSize:12]];
         _descriptionLabel.text = @"Description";
     }
     return _descriptionLabel;
@@ -45,12 +47,14 @@
 
 -(void) setUpCell {
     
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.separatorInset = UIEdgeInsetsZero;
     [self addSubview:self.titleLabel];
     [self addSubview:self.descriptionLabel];
     
+    self.backgroundColor = [UIColor clearColor];
     self.descriptionLabel.backgroundColor = [UIColor greenColor];
-    self.titleLabel.backgroundColor = [UIColor redColor];
+    self.titleLabel.backgroundColor = [UIColor grayColor];
     
     [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).with.offset(4);
