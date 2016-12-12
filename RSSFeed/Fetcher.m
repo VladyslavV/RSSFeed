@@ -112,5 +112,4 @@ NSMutableString* currentNodeContent;
     currentNodeContent = (NSMutableString*) [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
-
 @end

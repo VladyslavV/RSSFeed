@@ -39,8 +39,10 @@
     if (_pubDateLabel == nil) {
         _pubDateLabel = [UILabel new];
         _pubDateLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [_pubDateLabel sizeToFit];
+        [_pubDateLabel setFont:[UIFont systemFontOfSize:10]];
+        _pubDateLabel.adjustsFontSizeToFitWidth = YES;
         _pubDateLabel.numberOfLines = 0;
-        [_pubDateLabel setFont:[UIFont systemFontOfSize:8]];
     }
     return _pubDateLabel;
 }
@@ -91,7 +93,13 @@
     [self.view addSubview:self.newsDescriptionLabel];
     
     self.titleLabel.text = [self.feedDetailViewModel titleText];
-    self.newsDescriptionLabel.text = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+    self.newsDescriptionLabel.text = [self.feedDetailViewModel newsDescriptionText];
+    self.pubDateLabel.text = [self.feedDetailViewModel pubDateText];
+    
+    [self.feedDetailViewModel fetchImageWithUrl:self.feedDetailViewModel.imageURL andCallBack:^(NSData *imageData) {
+        UIImage* image = [UIImage imageWithData:imageData];
+        self.newsImageView.image = image;
+    }];
     
     self.pubDateLabel.backgroundColor = [UIColor redColor];
     self.newsImageView.backgroundColor = [UIColor greenColor];
@@ -153,7 +161,7 @@
     [self.pubDateLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         [constraints addObject:make.top.equalTo(self.newsImageView.mas_bottom).with.offset(2)];
         [constraints addObject:make.leading.trailing.equalTo(self.newsImageView)];
-        [constraints addObject:make.height.equalTo(@20)];
+        [constraints addObject:make.height.lessThanOrEqualTo(@20)];
     }];
     
     [self.newsDescriptionLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -186,7 +194,7 @@
         [constraints addObject:make.leading.equalTo(self.newsImageView.mas_trailing).with.offset(10)];
         [constraints addObject:make.trailing.equalTo(self.titleLabel)];
         [constraints addObject:make.bottom.equalTo(self.newsImageView)];
-        [constraints addObject:make.height.equalTo(@20)];
+        [constraints addObject:make.height.lessThanOrEqualTo(@20)];
         
     }];
     
@@ -199,8 +207,6 @@
     
     self.phoneLandscapeConstraints = [constraints copy];
 }
-
-
 
 - (void)uninstallPhonePortraitConstraints {
     for (MASConstraint *constraint in self.phonePortraitConstraints) {

@@ -28,7 +28,7 @@
     if (self) {
         self.imageURL = nodeDict[@"imageURL"];
         self.newsDescription = nodeDict[@"newsDescription"];
-        self.pubDate = nodeDict[@"pubData"];
+        self.pubDate = nodeDict[@"pubDate"];
         self.newsLink = nodeDict[@"newsLink"];
         self.title = nodeDict[@"title"];
     }

@@ -16,6 +16,11 @@
 - (instancetype)initWithItem:(NewsItem*) newsItem;
 
 -(NSString*) titleText;
+-(NSString*) pubDateText;
 -(NSString*) newsDescriptionText;
+-(NSString*) imageURL;
+
+//fetch image with URL
+-(void) fetchImageWithUrl:(NSString*) imgageUrl andCallBack:( void (^)(NSData* imageData)) completion;
 
 @end

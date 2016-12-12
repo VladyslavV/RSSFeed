@@ -17,8 +17,10 @@
 
 @interface Fetcher : NSObject
 
--(void) fetchData;
 @property (nonatomic, weak) id <FetcherDelegate> delegate;
 
+
+//fetch data
+-(void) fetchData;
 
 @end
