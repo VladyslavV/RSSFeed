@@ -17,6 +17,8 @@
     }
     else if (self.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
         return YES;
+    } else if (self.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
+        return YES;
     }
     else {
         return NO;
@@ -32,5 +34,13 @@
         return NO;
     }
 }
+
+-(BOOL)mk_matchesIpadPortrait {
+   if (self.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
+        return YES;
+    }
+    return NO;
+}
+
 
 @end

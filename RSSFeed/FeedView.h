@@ -20,7 +20,7 @@
 -(void) update;
 
 @property(strong, nonatomic) FeedViewModel* feedViewModel;
-
 @property(weak, nonatomic) id <FeedViewDelegate> delegate;
+
 
 @end

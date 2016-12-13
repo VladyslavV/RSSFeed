@@ -10,6 +10,10 @@
 
 @interface FeedDetailViewModel()
 
+@property NSArray *iPadPortraitConstraints;
+@property NSArray *phonePortraitConstraints;
+@property NSArray *phoneLandscapeConstraints;
+
 @end
 
 @implementation FeedDetailViewModel
@@ -22,7 +26,6 @@
     }
     return self;
 }
-
 
 -(NSString*) titleText {
     return self.newsItem.title;
@@ -38,6 +41,10 @@
 
 -(NSString*) imageURL {
     return self.newsItem.imageURL;
+}
+
+-(NSURL*) newsLink {
+    return [NSURL URLWithString:self.newsItem.newsLink];
 }
 
 #pragma mark - Fetch image
@@ -56,6 +63,5 @@
                                           }];
     [downloadTask resume];
 }
-
 
 @end

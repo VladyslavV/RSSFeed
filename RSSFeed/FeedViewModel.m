@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) Fetcher* fetcher;
 @property (strong, nonatomic) AllNews* allNews;
+@property (strong, nonatomic) NSArray* filteredNews;
 
 @end
 
@@ -42,14 +43,25 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.allNews.data.count;
+    if (self.filteredNews.count > 0) {
+        return self.filteredNews.count;
+    } else {
+        return self.allNews.data.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CustomTableViewCell* cell = [[CustomTableViewCell alloc] init];
-    NewsItem* item = self.allNews.data[indexPath.row];
+    NewsItem* item;
+    // what to show (filtered? or everything?)
+    if (self.filteredNews.count > 0) {
+        item = self.filteredNews[indexPath.row];
+    } else {
+        item = self.allNews.data[indexPath.row];
+    }
     cell.titleLabel.text = item.title;
     cell.descriptionLabel.text = item.newsDescription;
+    cell.numberLabel.text = [NSString stringWithFormat:@"%zd", indexPath.row];
     return cell;
 }
 
@@ -59,6 +71,26 @@
     NewsItem* item = self.allNews.data[cellIndex];
     FeedDetailViewModel* feedDetailViewModel = [[FeedDetailViewModel alloc] initWithItem:item];
     return feedDetailViewModel;
+}
+
+
+#pragma mark - Filter Table View
+
+-(void) filterTableWithString:(NSString*) searchString withCompletion:(void (^)(BOOL success)) completed{
+    self.filteredNews = nil; // make it nil every time before search
+    NSLog(@"%zd", self.filteredNews.count);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+    dispatch_async(queue, ^{
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K beginswith[c] %@", NSStringFromSelector(@selector(title)), searchString];
+        self.filteredNews = [self.allNews.data filteredArrayUsingPredicate:predicate];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if (self.filteredNews.count > 0) {
+                completed(YES);
+            } else {
+                completed(NO);
+            }
+        });
+    });
 }
 
 

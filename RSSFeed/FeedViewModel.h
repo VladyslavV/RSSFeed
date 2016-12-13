@@ -19,10 +19,16 @@
 
 @interface FeedViewModel : NSObject <UITableViewDataSource>
 
+//delegate
 @property (nonatomic, weak) id <FeedViewModelDelegate> delegate;
 
+// work with model
 -(void) updateModel;
+-(void) filterTableWithString:(NSString*) searchString withCompletion:(void (^)(BOOL success)) completed;
 
+
+
+// detail view model
 -(FeedDetailViewModel*) createFeedDetailViewModelForCell:(NSInteger) cellIndex;
 
 @end

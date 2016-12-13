@@ -12,6 +12,7 @@
 		31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */; };
 		31573FC31DFAF86B00882D43 /* FeedDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC21DFAF86B00882D43 /* FeedDetailViewModel.m */; };
 		31573FC61DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC51DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m */; };
+		31573FCA1DFEE79700882D43 /* FeedViewDetailMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC91DFEE79700882D43 /* FeedViewDetailMainView.m */; };
 		31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D1D2FF1DF9738F00A3D615 /* FeedViewModel.m */; };
 		31DCD2591DF6BA9C003601C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DCD2581DF6BA9C003601C8 /* main.m */; };
 		31DCD25C1DF6BA9C003601C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DCD25B1DF6BA9C003601C8 /* AppDelegate.m */; };
@@ -35,6 +36,8 @@
 		31573FC21DFAF86B00882D43 /* FeedDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedDetailViewModel.m; sourceTree = "<group>"; };
 		31573FC41DFE9D6E00882D43 /* UITraitCollection+MKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITraitCollection+MKAdditions.h"; sourceTree = "<group>"; };
 		31573FC51DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITraitCollection+MKAdditions.m"; sourceTree = "<group>"; };
+		31573FC81DFEE79700882D43 /* FeedViewDetailMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewDetailMainView.h; sourceTree = "<group>"; };
+		31573FC91DFEE79700882D43 /* FeedViewDetailMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewDetailMainView.m; sourceTree = "<group>"; };
 		31D1D2FE1DF9738F00A3D615 /* FeedViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewModel.h; sourceTree = "<group>"; };
 		31D1D2FF1DF9738F00A3D615 /* FeedViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewModel.m; sourceTree = "<group>"; };
 		31DCD2541DF6BA9C003601C8 /* RSSFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +75,8 @@
 			children = (
 				31573FBD1DFAF81900882D43 /* FeedViewDetailVC.h */,
 				31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */,
+				31573FC81DFEE79700882D43 /* FeedViewDetailMainView.h */,
+				31573FC91DFEE79700882D43 /* FeedViewDetailMainView.m */,
 				31573FC11DFAF86B00882D43 /* FeedDetailViewModel.h */,
 				31573FC21DFAF86B00882D43 /* FeedDetailViewModel.m */,
 			);
@@ -216,6 +221,7 @@
 				TargetAttributes = {
 					31DCD2531DF6BA9C003601C8 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 5HYBF2ZF8V;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -312,6 +318,7 @@
 				31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */,
 				31DCD2761DF72814003601C8 /* NewsItem.m in Sources */,
 				31DCD2591DF6BA9C003601C8 /* main.m in Sources */,
+				31573FCA1DFEE79700882D43 /* FeedViewDetailMainView.m in Sources */,
 				31573FC31DFAF86B00882D43 /* FeedDetailViewModel.m in Sources */,
 				31DCD2731DF727E3003601C8 /* AllNews.m in Sources */,
 			);
@@ -417,7 +424,8 @@
 			baseConfigurationReference = 23EC7013D2B7D79C364A7BA7 /* Pods-RSSFeed.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5HYBF2ZF8V;
 				INFOPLIST_FILE = RSSFeed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.VV.RSSFeed;
@@ -430,7 +438,8 @@
 			baseConfigurationReference = DBDEC2432B6DD45B01CB24F3 /* Pods-RSSFeed.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5HYBF2ZF8V;
 				INFOPLIST_FILE = RSSFeed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.VV.RSSFeed;

@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) UILabel* titleLabel;
 @property (strong, nonatomic) UILabel* descriptionLabel;
+@property (strong, nonatomic) UILabel* numberLabel;
 
 @end

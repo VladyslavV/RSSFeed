@@ -16,5 +16,8 @@
 // Any iphone in portrait orientation
 - (BOOL)mk_matchesPhonePortrait;
 
+// iPad in portrait orientation
+-(BOOL)mk_matchesIpadPortrait;
+
 @end
 

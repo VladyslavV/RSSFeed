@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NewsItem.h"
+#import <UIKit/UIKit.h>
 
 @interface FeedDetailViewModel : NSObject
 
@@ -19,8 +20,10 @@
 -(NSString*) pubDateText;
 -(NSString*) newsDescriptionText;
 -(NSString*) imageURL;
+-(NSURL*) newsLink;
 
 //fetch image with URL
 -(void) fetchImageWithUrl:(NSString*) imgageUrl andCallBack:( void (^)(NSData* imageData)) completion;
+
 
 @end
