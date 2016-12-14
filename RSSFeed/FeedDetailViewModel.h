@@ -22,6 +22,8 @@
 -(NSString*) imageURL;
 -(NSURL*) newsLink;
 
+-(NSString*) openInBrowserString;
+
 //fetch image with URL
 -(void) fetchImageWithUrl:(NSString*) imgageUrl andCallBack:( void (^)(NSData* imageData)) completion;
 

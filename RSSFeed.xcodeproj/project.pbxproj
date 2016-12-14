@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3100BEC51E003115006DBE6D /* ImageViewerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3100BEC41E003115006DBE6D /* ImageViewerVC.m */; };
 		31162C7A1DF8527A00AD1DAA /* FeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31162C791DF8527A00AD1DAA /* FeedView.m */; };
 		31162C7E1DF86C2C00AD1DAA /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */; };
 		31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */; };
 		31573FC31DFAF86B00882D43 /* FeedDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC21DFAF86B00882D43 /* FeedDetailViewModel.m */; };
 		31573FC61DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC51DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m */; };
 		31573FCA1DFEE79700882D43 /* FeedViewDetailMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FC91DFEE79700882D43 /* FeedViewDetailMainView.m */; };
+		31C22C0B1DFFF234003453E9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31C22C0D1DFFF234003453E9 /* Localizable.strings */; };
+		31C22C111DFFFF23003453E9 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 31C22C131DFFFF23003453E9 /* Localizable.stringsdict */; };
 		31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D1D2FF1DF9738F00A3D615 /* FeedViewModel.m */; };
 		31DCD2591DF6BA9C003601C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DCD2581DF6BA9C003601C8 /* main.m */; };
 		31DCD25C1DF6BA9C003601C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DCD25B1DF6BA9C003601C8 /* AppDelegate.m */; };
@@ -26,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		23EC7013D2B7D79C364A7BA7 /* Pods-RSSFeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RSSFeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RSSFeed/Pods-RSSFeed.debug.xcconfig"; sourceTree = "<group>"; };
+		3100BEC31E003115006DBE6D /* ImageViewerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerVC.h; sourceTree = "<group>"; };
+		3100BEC41E003115006DBE6D /* ImageViewerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewerVC.m; sourceTree = "<group>"; };
 		31162C781DF8527A00AD1DAA /* FeedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedView.h; sourceTree = "<group>"; };
 		31162C791DF8527A00AD1DAA /* FeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedView.m; sourceTree = "<group>"; };
 		31162C7C1DF86C2C00AD1DAA /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
@@ -38,6 +43,10 @@
 		31573FC51DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITraitCollection+MKAdditions.m"; sourceTree = "<group>"; };
 		31573FC81DFEE79700882D43 /* FeedViewDetailMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewDetailMainView.h; sourceTree = "<group>"; };
 		31573FC91DFEE79700882D43 /* FeedViewDetailMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewDetailMainView.m; sourceTree = "<group>"; };
+		31C22C0C1DFFF234003453E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		31C22C0E1DFFF243003453E9 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		31C22C121DFFFF23003453E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		31C22C151DFFFF3A003453E9 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ar; path = ar.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		31D1D2FE1DF9738F00A3D615 /* FeedViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewModel.h; sourceTree = "<group>"; };
 		31D1D2FF1DF9738F00A3D615 /* FeedViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedViewModel.m; sourceTree = "<group>"; };
 		31DCD2541DF6BA9C003601C8 /* RSSFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,9 +79,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3100BEC61E00311A006DBE6D /* Image Viewer VC  */ = {
+			isa = PBXGroup;
+			children = (
+				3100BEC31E003115006DBE6D /* ImageViewerVC.h */,
+				3100BEC41E003115006DBE6D /* ImageViewerVC.m */,
+			);
+			name = "Image Viewer VC ";
+			sourceTree = "<group>";
+		};
 		31573FC01DFAF82700882D43 /* Feed Detail VC */ = {
 			isa = PBXGroup;
 			children = (
+				3100BEC61E00311A006DBE6D /* Image Viewer VC  */,
 				31573FBD1DFAF81900882D43 /* FeedViewDetailVC.h */,
 				31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */,
 				31573FC81DFEE79700882D43 /* FeedViewDetailMainView.h */,
@@ -112,7 +131,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		317AC1A51DF835CD001645FC /* Feed View Controller */ = {
+		317AC1A51DF835CD001645FC /* Feed VC */ = {
 			isa = PBXGroup;
 			children = (
 				31DCD25D1DF6BA9C003601C8 /* FeedViewController.h */,
@@ -124,7 +143,7 @@
 				31162C7C1DF86C2C00AD1DAA /* CustomTableViewCell.h */,
 				31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */,
 			);
-			name = "Feed View Controller";
+			name = "Feed VC";
 			sourceTree = "<group>";
 		};
 		31DCD24B1DF6BA9C003601C8 = {
@@ -150,7 +169,7 @@
 			children = (
 				31573FC71DFE9D8000882D43 /* Categories */,
 				31573FC01DFAF82700882D43 /* Feed Detail VC */,
-				317AC1A51DF835CD001645FC /* Feed View Controller */,
+				317AC1A51DF835CD001645FC /* Feed VC */,
 				317AC1A31DF835BD001645FC /* Fetcher */,
 				317AC1A41DF835C4001645FC /* Model */,
 				31DCD2571DF6BA9C003601C8 /* Supporting Files */,
@@ -163,9 +182,11 @@
 			children = (
 				31DCD25A1DF6BA9C003601C8 /* AppDelegate.h */,
 				31DCD25B1DF6BA9C003601C8 /* AppDelegate.m */,
+				31DCD2581DF6BA9C003601C8 /* main.m */,
 				31DCD2631DF6BA9C003601C8 /* Assets.xcassets */,
 				31DCD2681DF6BA9C003601C8 /* Info.plist */,
-				31DCD2581DF6BA9C003601C8 /* main.m */,
+				31C22C131DFFFF23003453E9 /* Localizable.stringsdict */,
+				31C22C0D1DFFF234003453E9 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -233,6 +254,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 			);
 			mainGroup = 31DCD24B1DF6BA9C003601C8;
 			productRefGroup = 31DCD2551DF6BA9C003601C8 /* Products */;
@@ -250,6 +272,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				31DCD2641DF6BA9C003601C8 /* Assets.xcassets in Resources */,
+				31C22C0B1DFFF234003453E9 /* Localizable.strings in Resources */,
+				31C22C111DFFFF23003453E9 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +334,7 @@
 			files = (
 				31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */,
 				31162C7A1DF8527A00AD1DAA /* FeedView.m in Sources */,
+				3100BEC51E003115006DBE6D /* ImageViewerVC.m in Sources */,
 				31DCD25F1DF6BA9C003601C8 /* FeedViewController.m in Sources */,
 				31162C7E1DF86C2C00AD1DAA /* CustomTableViewCell.m in Sources */,
 				31DCD2701DF6F0C2003601C8 /* Fetcher.m in Sources */,
@@ -326,11 +351,33 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		31C22C0D1DFFF234003453E9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				31C22C0C1DFFF234003453E9 /* Base */,
+				31C22C0E1DFFF243003453E9 /* ar */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		31C22C131DFFFF23003453E9 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				31C22C121DFFFF23003453E9 /* Base */,
+				31C22C151DFFFF3A003453E9 /* ar */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		31DCD2691DF6BA9C003601C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -380,6 +427,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

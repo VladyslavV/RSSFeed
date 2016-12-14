@@ -47,6 +47,10 @@
     return [NSURL URLWithString:self.newsItem.newsLink];
 }
 
+-(NSString*) openInBrowserString {
+    return NSLocalizedString(@"navigation.bar.openinbrowser", nil);
+}
+
 #pragma mark - Fetch image
 
 -(void) fetchImageWithUrl:(NSString*) imgageUrl andCallBack:( void (^)(NSData* imageData)) completion {
@@ -54,7 +58,6 @@
     
     NSURLSessionDataTask *downloadTask = [[NSURLSession sharedSession]
                                           dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                              
                                               if (error == nil) {
                                                   dispatch_async(dispatch_get_main_queue(), ^{
                                                       completion(data);

@@ -10,17 +10,48 @@
 #import "Masonry.h"
 #import "UITraitCollection+MKAdditions.h"
 
-@interface FeedViewDetailMainView()
+@interface FeedViewDetailMainView() <UIGestureRecognizerDelegate>
+
+@property (strong, nonatomic) FeedDetailViewModel* feedDetailViewModel;
+
+@property (strong, nonatomic) UILabel* titleLabel;
+@property (strong, nonatomic) UILabel* newsDescriptionLabel;
+@property (strong, nonatomic) UILabel* pubDateLabel;
+
+@property (strong, nonatomic) UIVisualEffectView* blurView;
 
 @property BOOL didSetConstraints;
 @property NSArray *iPadPortraitConstraints;
 @property NSArray *phonePortraitConstraints;
 @property NSArray *phoneLandscapeConstraints;
 
+@property (strong, nonatomic) UITapGestureRecognizer* tapGestureRecognizer;
+
 @end
 
 @implementation FeedViewDetailMainView
 
+
+
+#pragma mark - Create Views
+
+-(UIVisualEffectView*) blurView {
+    if (_blurView == nil) {
+        UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        _blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];;
+        _blurView.translatesAutoresizingMaskIntoConstraints = NO;
+    }
+    return _blurView;
+}
+
+-(UITapGestureRecognizer*) tapGestureRecongnizer {
+    if (_tapGestureRecognizer == nil) {
+        _tapGestureRecognizer = [[UITapGestureRecognizer alloc] init];
+        [_tapGestureRecognizer addTarget:self action:@selector(handleTapFrom:)];
+        _tapGestureRecognizer.delegate = self;
+    }
+    return _tapGestureRecognizer;
+}
 
 -(NSAttributedString*) getAttributedString:(NSString*) oldString {
     NSMutableAttributedString* newString = [[NSMutableAttributedString alloc] initWithString:oldString];
@@ -33,7 +64,7 @@
 -(UIBarButtonItem*) barButtonOpenInSafari {
     if (_barButtonOpenInSafari == nil) {
         _barButtonOpenInSafari = [[UIBarButtonItem alloc] init];
-        _barButtonOpenInSafari.title = @"Open in Safari";
+        _barButtonOpenInSafari.title = NSLocalizedString(@"navigation.bar.openinbrowser", nil);
     }
     return _barButtonOpenInSafari;
 }
@@ -43,6 +74,7 @@
         _newsImageView = [UIImageView new];
         _newsImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [_newsImageView setContentMode:UIViewContentModeScaleToFill];
+        [_newsImageView setUserInteractionEnabled:YES];
     }
     return _newsImageView;
 }
@@ -84,18 +116,57 @@
     return _newsDescriptionLabel;
 }
 
-- (instancetype)init
+#pragma mark - Initializer
+
+- (instancetype)initWithModel:(FeedDetailViewModel*) model
 {
     self = [super init];
     if (self) {
+        self.feedDetailViewModel = model;
         self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.titleLabel];
         [self addSubview:self.newsImageView];
         [self addSubview:self.pubDateLabel];
         [self addSubview:self.newsDescriptionLabel];
+        
+        self.barButtonOpenInSafari.target = self;
+        self.barButtonOpenInSafari.action = @selector(openInSafari);
+        self.titleLabel.attributedText = [self getAttributedString:[self.feedDetailViewModel titleText]];
+        self.newsDescriptionLabel.text = [self.feedDetailViewModel newsDescriptionText];
+        self.pubDateLabel.text = [self.feedDetailViewModel pubDateText];
+        [self.feedDetailViewModel fetchImageWithUrl:self.feedDetailViewModel.imageURL andCallBack:^(NSData *imageData) {
+            UIImage* image = [UIImage imageWithData:imageData];
+            self.newsImageView.image = image;
+        }];
+        
+        [self.newsImageView addGestureRecognizer:self.tapGestureRecongnizer];
+
         [self setNeedsUpdateConstraints];
     }
     return self;
+}
+
+#pragma mark - User Actions
+
+- (void) handleTapFrom: (UITapGestureRecognizer *)recognizer {
+    [self.delegate imageTapped];
+}
+
+-(void) openInSafari {
+    [[UIApplication sharedApplication] openURL:[self.feedDetailViewModel newsLink]
+                                       options:@{}
+                             completionHandler:nil];
+}
+
+-(void) addBlurView {
+    [self addSubview:self.blurView];
+    [self.blurView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
+}
+
+-(void) removeBlurView {
+    [self.blurView removeFromSuperview];
 }
 
 #pragma mark - UIViewController template methods
@@ -198,6 +269,7 @@
     self.phoneLandscapeConstraints = [constraints copy];
 }
 
+//iPad constraints (regular in all directions)
 -(void) installIpadPortraitConstraints {
     NSMutableArray *constraints = [[NSMutableArray alloc] init];
     

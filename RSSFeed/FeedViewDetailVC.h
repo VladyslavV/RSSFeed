@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FeedDetailViewModel.h"
+#import "FeedViewDetailMainView.h"
 
-@interface FeedViewDetailVC : UIViewController
+@interface FeedViewDetailVC : UIViewController <FeedViewDetailMainViewDelegate, UIPopoverPresentationControllerDelegate>
 
 - (instancetype)initWithViewModel:(FeedDetailViewModel*) feedDetailViewModel;
 

@@ -7,17 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FeedDetailViewModel.h"
 
-@interface FeedViewDetailMainView : UIView
+@protocol FeedViewDetailMainViewDelegate <NSObject>
 
-@property (strong, nonatomic) UILabel* titleLabel;
-@property (strong, nonatomic) UILabel* newsDescriptionLabel;
-@property (strong, nonatomic) UILabel* pubDateLabel;
-@property (strong, nonatomic) UIImageView* newsImageView;
+-(void) imageTapped;
+
+@end
+
+@interface FeedViewDetailMainView : UIView 
+
+@property(weak, nonatomic) id <FeedViewDetailMainViewDelegate> delegate;
+
 @property (strong, nonatomic) UIBarButtonItem* barButtonOpenInSafari;
+
+@property (strong, nonatomic) UIImageView* newsImageView;
 
 - (void)toggleConstraintsForTraitCollection:(UITraitCollection *)traitCollection;
 
 -(NSAttributedString*) getAttributedString:(NSString*) oldString;
+
+- (instancetype)initWithModel:(FeedDetailViewModel*) model;
+
+-(void) addBlurView;
+-(void) removeBlurView;
 
 @end

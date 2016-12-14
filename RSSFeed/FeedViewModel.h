@@ -24,8 +24,8 @@
 
 // work with model
 -(void) updateModel;
--(void) filterTableWithString:(NSString*) searchString withCompletion:(void (^)(BOOL success)) completed;
-
+-(void) filterTableWithString:(NSString*) searchString withCompletion:(void (^)(void)) completed;
+-(NSString*) searchBarPlaceholder;
 
 
 // detail view model

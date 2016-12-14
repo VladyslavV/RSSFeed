@@ -22,7 +22,6 @@
     if (_searchBar == nil) {
         _searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
         _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
-        _searchBar.placeholder = @"Search Here!";
         _searchBar.delegate = self;
         self.tableView.tableHeaderView = _searchBar;
     }
@@ -36,7 +35,7 @@
         _tableView.dataSource = self;
         _tableView.estimatedRowHeight = 300.0;
         _tableView.rowHeight = UITableViewAutomaticDimension;
-        [self addSubview:self.tableView];
+        [self addSubview:_tableView];
         [self addSubview:self.searchBar];
     }
     return _tableView;
@@ -44,6 +43,7 @@
 
 -(void) update {
     [self.tableView reloadData];
+    self.searchBar.placeholder = [self.feedViewModel searchBarPlaceholder];
 }
 
 #pragma mark - Trait Collection Delegate Methods
@@ -68,7 +68,7 @@
 #pragma mark - Search Bar Delegate Methods
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [self.feedViewModel filterTableWithString:searchBar.text withCompletion:^(BOOL success) {
+    [self.feedViewModel filterTableWithString:searchBar.text withCompletion:^{
         [self.tableView reloadData];
     }];
 }

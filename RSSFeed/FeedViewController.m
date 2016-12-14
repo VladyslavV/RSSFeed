@@ -17,11 +17,9 @@
 //ViewModel
 @property (strong, nonatomic) FeedViewModel* feedViewModel;
 
-
 @end
 
 @implementation FeedViewController
-
 
 #pragma mark - FeedView Delegate
 
