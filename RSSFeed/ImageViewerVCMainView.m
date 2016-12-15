@@ -75,8 +75,6 @@
         //gestures
         [self.scrollView addGestureRecognizer:self.tapToZoom];
         [self addGestureRecognizer:self.tapToDismissController];
-        self.scrollView.backgroundColor = [UIColor whiteColor];
-
     }];
 }
 

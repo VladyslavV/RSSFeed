@@ -48,6 +48,7 @@
         _scrollView.maximumZoomScale = 5.0;
         _scrollView.userInteractionEnabled = YES;
         _scrollView.contentMode = UIViewContentModeScaleToFill;
+        _scrollView.backgroundColor = [UIColor lightGrayColor];
     }
     return _scrollView;
 }

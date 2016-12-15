@@ -70,5 +70,20 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
+#pragma mark - Share to media
+
+-(void) shareToMedia:(NSURL *)newsLink {
+    NSArray* itemsToShare = @[newsLink];
+    UIActivityViewController * activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    
+    activityVC.excludedActivityTypes = @[UIActivityTypeMail,
+                                         UIActivityTypeAirDrop,
+                                         UIActivityTypeMessage,
+                                         UIActivityTypePostToVimeo,
+                                         UIActivityTypeOpenInIBooks,
+                                         ];
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
 
 @end

@@ -11,6 +11,7 @@
 
 @protocol FeedViewDetailMainViewDelegate <NSObject>
 -(void) imageTapped;
+-(void) shareToMedia:(NSURL*) newsLink;
 
 @end
 

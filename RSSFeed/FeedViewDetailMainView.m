@@ -19,6 +19,8 @@
 @property (strong, nonatomic) UILabel* newsDescriptionLabel;
 @property (strong, nonatomic) UILabel* pubDateLabel;
 
+@property (strong, nonatomic) UIButton* shareSocialButton;
+
 @property (strong, nonatomic) UIVisualEffectView* blurView;
 
 @property BOOL didSetConstraints;
@@ -32,9 +34,23 @@
 
 @implementation FeedViewDetailMainView
 
-
-
 #pragma mark - Create Views
+
+-(UIButton*) shareSocialButton {
+    if (_shareSocialButton == nil) {
+        _shareSocialButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _shareSocialButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [_shareSocialButton addTarget:self action:@selector(shareToSocialMedia:) forControlEvents:UIControlEventTouchUpInside];
+        [_shareSocialButton setTitle:NSLocalizedString(@"share.to.socialmedia", nil) forState:UIControlStateNormal];
+        [_shareSocialButton.layer setBorderWidth:2.0f];
+        _shareSocialButton.layer.masksToBounds = YES;
+        _shareSocialButton.clipsToBounds = YES;
+        UIColor *lightBlueColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0/255.0 alpha:1.0];
+        [_shareSocialButton setTitleColor:lightBlueColor forState:UIControlStateNormal];
+        [[_shareSocialButton layer] setBorderColor:lightBlueColor.CGColor];
+    }
+    return _shareSocialButton;
+}
 
 -(UIVisualEffectView*) blurView {
     if (_blurView == nil) {
@@ -110,8 +126,10 @@
         _newsDescriptionLabel = [UILabel new];
         _newsDescriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _newsDescriptionLabel.numberOfLines = 0;
-        [_newsDescriptionLabel setFont:[UIFont systemFontOfSize:22]];
+        UIFont* font = [UIFont systemFontOfSize:22];
+        [_newsDescriptionLabel setFont:font];
         [_newsDescriptionLabel sizeToFit];
+        _newsDescriptionLabel.minimumScaleFactor = 12.0 / font.pointSize;
         _newsDescriptionLabel.adjustsFontSizeToFitWidth = YES;
     }
     return _newsDescriptionLabel;
@@ -129,12 +147,14 @@
         [self addSubview:self.newsImageView];
         [self addSubview:self.pubDateLabel];
         [self addSubview:self.newsDescriptionLabel];
+        [self addSubview:self.shareSocialButton];
         
         self.barButtonOpenInSafari.target = self;
         self.barButtonOpenInSafari.action = @selector(openInSafari);
         self.titleLabel.attributedText = [self getAttributedString:[self.feedDetailViewModel titleText]];
         self.newsDescriptionLabel.text = [self.feedDetailViewModel newsDescriptionText];
         self.pubDateLabel.text = [self.feedDetailViewModel pubDateText];
+        
         
         [[ImageDownloader sharedObject] fetchImageWithUrl:self.feedDetailViewModel.imageURL andCallBack:^(NSData *imageData) {
             UIImage* image = [UIImage imageWithData:imageData];
@@ -169,6 +189,10 @@
 
 -(void) removeBlurView {
     [self.blurView removeFromSuperview];
+}
+
+-(void) shareToSocialMedia:(UIButton*) sender {
+    [self.delegate shareToMedia:[self.feedDetailViewModel newsLink]];
 }
 
 #pragma mark - UIViewController template methods
@@ -229,10 +253,22 @@
     [self.newsDescriptionLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         [constraints addObject:make.top.equalTo(self.pubDateLabel.mas_bottom).with.offset(6)];
         [constraints addObject:make.leading.trailing.equalTo(self.newsImageView)];
-        [constraints addObject:make.bottom.lessThanOrEqualTo(self.mas_bottom).with.offset(-20)];
+        [constraints addObject:make.bottom.lessThanOrEqualTo(self.shareSocialButton.mas_top).with.offset(-20)];
     }];
     
+    [self.shareSocialButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        [constraints addObject:make.centerX.equalTo(self.mas_centerX)];
+        [constraints addObject:make.width.equalTo(self.mas_width).multipliedBy(0.4)];
+        [constraints addObject:make.height.equalTo(self.mas_height).multipliedBy(0.1)];
+        [constraints addObject:make.bottom.equalTo(self.mas_bottom).with.offset(-30)];
+    }];
+
+    [self performSelector:@selector(makeButtonRounded) withObject:nil afterDelay:0.2f];
     self.phonePortraitConstraints = [constraints copy];
+}
+
+-(void) makeButtonRounded {
+    self.shareSocialButton.layer.cornerRadius = self.shareSocialButton.frame.size.width / 10.0f;
 }
 
 //landscape constraints
@@ -265,9 +301,17 @@
         [constraints addObject:make.leading.equalTo(self.pubDateLabel)];
         [constraints addObject:make.top.equalTo(self.newsImageView)];
         [constraints addObject:make.trailing.equalTo(self.titleLabel)];
-        [constraints addObject:make.bottom.lessThanOrEqualTo(self.pubDateLabel.mas_top).with.offset(-6)];
+        [constraints addObject:make.bottom.lessThanOrEqualTo(self.shareSocialButton.mas_top).with.offset(-6)];
     }];
     
+    [self.shareSocialButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        [constraints addObject:make.centerX.equalTo(self.newsDescriptionLabel.mas_centerX)];
+        [constraints addObject:make.width.equalTo(self).multipliedBy(0.2)];
+        [constraints addObject:make.height.equalTo(self).multipliedBy(0.1)];
+        [constraints addObject:make.bottom.equalTo(self.pubDateLabel.mas_top).with.offset(-10)];
+    }];
+    
+    [self makeButtonRounded];
     self.phoneLandscapeConstraints = [constraints copy];
 }
 
@@ -285,9 +329,7 @@
     [self.newsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         [constraints addObject:make.top.equalTo(self.titleLabel.mas_bottom).with.offset(10)];
         [constraints addObject:make.width.height.equalTo(self.mas_height).multipliedBy(0.4)];
-        //[constraints addObject:make.trailing.equalTo(self.view.mas_centerX)];
         [constraints addObject:make.leading.equalTo(self.mas_leading).with.offset(20)];
-        //[constraints addObject:make.bottom.equalTo(self.view.mas_centerY).with.offset];
     }];
     
     [self.pubDateLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -303,6 +345,14 @@
         [constraints addObject:make.bottom.lessThanOrEqualTo(self.pubDateLabel.mas_top).with.offset(-6)];
     }];
     
+    [self.shareSocialButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        [constraints addObject:make.centerX.equalTo(self.mas_centerX)];
+        [constraints addObject:make.width.equalTo(self.mas_width).multipliedBy(0.4)];
+        [constraints addObject:make.height.equalTo(self.mas_height).multipliedBy(0.1)];
+        [constraints addObject:make.bottom.equalTo(self.mas_bottom).with.offset(-30)];
+    }];
+    
+    [self performSelector:@selector(makeButtonRounded) withObject:nil afterDelay:0.2f];
     self.iPadPortraitConstraints = [constraints copy];
 }
 
