@@ -138,7 +138,6 @@
     [super updateConstraints];
 }
 
-
 - (void)toggleConstraintsForTraitCollection:(UITraitCollection *)traitCollection {
     
     if ([traitCollection mk_matchesIpadPortrait]) {
@@ -196,14 +195,14 @@
 -(void) installIpadPortraitConstraints {
     NSMutableArray *constraints = [[NSMutableArray alloc] init];
     
-    [self.myImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        [constraints addObject:make.edges.equalTo(self.scrollView)];
-    }];
-    
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         [constraints addObject:make.width.equalTo(self.mas_width)];
         [constraints addObject:make.center.equalTo(self)];
         [constraints addObject:make.height.equalTo(self.mas_height).multipliedBy(0.5)];
+    }];
+    
+    [self.myImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.width.height.equalTo(self.scrollView);
     }];
     
     self.iPadPortraitConstraints = [constraints copy];
