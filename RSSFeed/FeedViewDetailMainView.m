@@ -9,8 +9,9 @@
 #import "FeedViewDetailMainView.h"
 #import "Masonry.h"
 #import "UITraitCollection+MKAdditions.h"
+#import "ImageDownloader.h"
 
-@interface FeedViewDetailMainView() <UIGestureRecognizerDelegate>
+@interface FeedViewDetailMainView() 
 
 @property (strong, nonatomic) FeedDetailViewModel* feedDetailViewModel;
 
@@ -134,11 +135,12 @@
         self.titleLabel.attributedText = [self getAttributedString:[self.feedDetailViewModel titleText]];
         self.newsDescriptionLabel.text = [self.feedDetailViewModel newsDescriptionText];
         self.pubDateLabel.text = [self.feedDetailViewModel pubDateText];
-        [self.feedDetailViewModel fetchImageWithUrl:self.feedDetailViewModel.imageURL andCallBack:^(NSData *imageData) {
+        
+        [[ImageDownloader sharedObject] fetchImageWithUrl:self.feedDetailViewModel.imageURL andCallBack:^(NSData *imageData) {
             UIImage* image = [UIImage imageWithData:imageData];
             self.newsImageView.image = image;
         }];
-        
+    
         [self.newsImageView addGestureRecognizer:self.tapGestureRecongnizer];
 
         [self setNeedsUpdateConstraints];

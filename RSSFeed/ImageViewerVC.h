@@ -1,15 +1,18 @@
 //
 //  ImageViewerVC.h
-//  RSSFeed
+//  
 //
-//  Created by Vladysalv Vyshnevksyy on 12/13/16.
-//  Copyright © 2016 Vladysalv Vyshnevksyy. All rights reserved.
+//  Created by Vladysalv Vyshnevksyy on 12/14/16.
+//
 //
 
 #import <UIKit/UIKit.h>
+#import "ImageViewerViewModel.h"
 
 @interface ImageViewerVC : UIViewController
 
-- (instancetype)initWithImage:(UIImage*) image;
+@property (strong, nonatomic) UIImage* myImage;
+
+- (instancetype)initWithViewModel:(ImageViewerViewModel*) viewModel;
 
 @end

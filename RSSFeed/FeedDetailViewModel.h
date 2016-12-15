@@ -12,20 +12,14 @@
 
 @interface FeedDetailViewModel : NSObject
 
-@property (nonatomic, strong) NewsItem* newsItem;
-
 - (instancetype)initWithItem:(NewsItem*) newsItem;
 
 -(NSString*) titleText;
 -(NSString*) pubDateText;
 -(NSString*) newsDescriptionText;
--(NSString*) imageURL;
+-(NSURL*) imageURL;
 -(NSURL*) newsLink;
 
 -(NSString*) openInBrowserString;
-
-//fetch image with URL
--(void) fetchImageWithUrl:(NSString*) imgageUrl andCallBack:( void (^)(NSData* imageData)) completion;
-
 
 @end

@@ -14,6 +14,8 @@
 @property NSArray *phonePortraitConstraints;
 @property NSArray *phoneLandscapeConstraints;
 
+@property (nonatomic, strong) NewsItem* newsItem;
+
 @end
 
 @implementation FeedDetailViewModel
@@ -39,8 +41,8 @@
     return self.newsItem.pubDate;
 }
 
--(NSString*) imageURL {
-    return self.newsItem.imageURL;
+-(NSURL*) imageURL {
+    return [NSURL URLWithString: self.newsItem.imageURL];
 }
 
 -(NSURL*) newsLink {
@@ -49,22 +51,6 @@
 
 -(NSString*) openInBrowserString {
     return NSLocalizedString(@"navigation.bar.openinbrowser", nil);
-}
-
-#pragma mark - Fetch image
-
--(void) fetchImageWithUrl:(NSString*) imgageUrl andCallBack:( void (^)(NSData* imageData)) completion {
-    NSURL* url = [NSURL URLWithString:imgageUrl];
-    
-    NSURLSessionDataTask *downloadTask = [[NSURLSession sharedSession]
-                                          dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                              if (error == nil) {
-                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                      completion(data);
-                                                  });
-                                              }
-                                          }];
-    [downloadTask resume];
 }
 
 @end

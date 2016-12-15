@@ -10,13 +10,13 @@
 #import "Masonry.h"
 #import "UITraitCollection+MKAdditions.h"
 #import "ImageViewerVC.h"
+#import "ImageViewerViewModel.h"
 
 @interface FeedViewDetailVC ()
 
 @property (strong, nonatomic) FeedDetailViewModel* feedDetailViewModel;
 @property (strong, nonatomic) FeedViewDetailMainView* mainView;
 
-@property (strong, nonatomic) ImageViewerVC* imageViewerVC;
 
 @end
 
@@ -59,46 +59,15 @@
 #pragma mark - UIContentContainer protocol methods
 
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [self.mainView removeBlurView];
-    [self.imageViewerVC dismissViewControllerAnimated:NO completion:nil];
     [self.mainView toggleConstraintsForTraitCollection:newCollection];
 }
 
 #pragma mark - Image Tapped Delegate
 
 -(void) imageTapped {
-    self.imageViewerVC = [[ImageViewerVC alloc] initWithImage:self.mainView.newsImageView.image];
-    self.imageViewerVC.modalPresentationStyle = UIModalPresentationPopover;
-    
-    if ([self.traitCollection mk_matchesPhonePortrait]) {
-        self.imageViewerVC.preferredContentSize = CGSizeMake(self.view.frame.size.width * 0.8, self.view.frame.size.height * 0.5);
-    } else if ([self.traitCollection mk_matchesPhoneLandscape]) {
-        self.imageViewerVC.preferredContentSize = CGSizeMake(self.view.frame.size.height * 0.8, self.view.frame.size.width * 0.5);
-    }
-    
-    [self.mainView addBlurView];
-    //retrieve popvc pointer
-    UIPopoverPresentationController* popVC =  self.imageViewerVC.popoverPresentationController;
-    
-    if (popVC != nil) {
-        popVC.delegate = self;
-        popVC.sourceView = self.view;
-        popVC.sourceRect = self.view.frame;
-        
-        popVC.canOverlapSourceViewRect = NO;
-        popVC.permittedArrowDirections = 0;
-    }
-    
-    [self presentViewController: self.imageViewerVC animated:YES completion:nil];
-}
-
-- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller traitCollection:(UITraitCollection *)traitCollection {
-    return UIModalPresentationNone; 
-}
-
-- (BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
-    [self.mainView removeBlurView];
-    return YES;
+    ImageViewerViewModel* imageViewerViewModel = [[ImageViewerViewModel alloc] initWithURL:self.feedDetailViewModel.imageURL];
+    ImageViewerVC* vc = [[ImageViewerVC alloc] initWithViewModel:imageViewerViewModel];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 
