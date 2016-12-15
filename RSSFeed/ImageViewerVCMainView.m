@@ -16,11 +16,10 @@
 @property (strong, nonatomic) ImageViewerViewModel* viewModel;
 
 @property (strong, nonatomic) UIImageView* myImageView;
-@property (strong, nonatomic) UIVisualEffectView* blurEffectView;
-@property (strong, nonatomic) UIButton* dismissController;
 
 @property (strong, nonatomic) UIScrollView* scrollView;
-@property (strong, nonatomic) UITapGestureRecognizer* tapGestureRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer* tapToZoom;
+@property (strong, nonatomic) UITapGestureRecognizer* tapToDismissController;
 
 @property BOOL didSetConstraints;
 @property NSArray *iPadPortraitConstraints;
@@ -31,47 +30,23 @@
 
 @implementation ImageViewerVCMainView
 
-@synthesize scrollView = _scrollView;
-
-
--(UITapGestureRecognizer*) tapGestureRecognizer {
-    if (_tapGestureRecognizer == nil) {
-        _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
-        _tapGestureRecognizer.delegate = self;
-        _tapGestureRecognizer.numberOfTapsRequired = 2;
+-(UITapGestureRecognizer*) tapToDismissController {
+    if (_tapToDismissController == nil) {
+        _tapToDismissController = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+        _tapToDismissController.delegate = self;
+        _tapToDismissController.numberOfTapsRequired = 1;
     }
-    return _tapGestureRecognizer;
+    return _tapToDismissController;
 }
 
--(UIScrollView*) scrollView {
-    if (_scrollView == nil) {
-        _scrollView = [UIScrollView new];
-        _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-        _scrollView.minimumZoomScale = 0.5;
-        _scrollView.maximumZoomScale = 2.0;
-        _scrollView.delegate = self;
-        _scrollView.userInteractionEnabled = YES;
+-(UITapGestureRecognizer*) tapToZoom {
+    if (_tapToZoom == nil) {
+        _tapToZoom = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+        _tapToZoom.delegate = self;
+        _tapToZoom.numberOfTapsRequired = 2;
     }
-    return _scrollView;
+    return _tapToZoom;
 }
-
--(UIVisualEffectView*) blurEffectView {
-    if (_blurEffectView == nil) {
-        UIVisualEffect* blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-        _blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        _blurEffectView.translatesAutoresizingMaskIntoConstraints = NO;
-    }
-    return _blurEffectView;
-}
-
--(UIImageView*) myImageView {
-    if (_myImageView == nil) {
-        _myImageView = [UIImageView new];
-        _myImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    }
-    return _myImageView;
-}
-
 
 //init with view model
 - (instancetype)initWithViewModel:(ImageViewerViewModel*) viewModel;
@@ -79,26 +54,30 @@
     self = [super init];
     if (self) {
         _viewModel = viewModel;
-        self.backgroundColor = [UIColor clearColor];
-        
+        self.backgroundColor = [UIColor blackColor];
     }
     return self;
 }
 
--(void) layoutSubviews {
-    [self updateZoomToNormal];
-}
-
-
+// called once (viewDidLoad)
 -(void) didMoveToSuperview {
-    [self addSubview:self.scrollView];
     
-    [self.viewModel setImage:self.myImageView forScrollView:self.scrollView];
-    [self addGestureRecognizer:self.tapGestureRecognizer];
     
-    // [self addSubview:self.blurEffectView];
-    //[self.blurEffectView addSubview:self.myImageView];
-    //[self.viewModel setImage:self.myImageView];
+    [self.viewModel prepareScrollView:^(UIScrollView *scrollView, UIImageView *imageView) {
+        self.scrollView = scrollView;
+        self.myImageView = imageView;
+        
+        self.scrollView.delegate = self;
+        
+        [self addSubview:self.scrollView];
+        [self.scrollView addSubview:self.myImageView];
+        
+        //gestures
+        [self.scrollView addGestureRecognizer:self.tapToZoom];
+        [self addGestureRecognizer:self.tapToDismissController];
+        self.scrollView.backgroundColor = [UIColor whiteColor];
+
+    }];
 }
 
 #pragma mark - Scroll Methods
@@ -107,22 +86,12 @@
     return self.myImageView;
 }
 
-- (void)updateZoomToNormal {
-    float zoomScale = [self normalZoomScale];
-    if (zoomScale > 1) {
-        self.scrollView.minimumZoomScale = 1;
-    }
-    self.scrollView.minimumZoomScale = zoomScale;
-    self.scrollView.zoomScale = zoomScale;
-}
-
 -(CGFloat) normalZoomScale {
     CGFloat zoomScale = MIN(self.bounds.size.width / self.myImageView.image.size.width, self.bounds.size.height / self.myImageView.image.size.height);
     return zoomScale;
 }
 
 -(CGRect) zoomToRectWithPoint:(CGPoint) tapPoint {
-    //CGFloat scale = MIN(self.scrollView.zoomScale * 2, self.scrollView.maximumZoomScale);
     CGFloat scale = self.scrollView.maximumZoomScale; // zoom very close
     CGSize scrollSize = self.scrollView.frame.size;
     CGPoint point = tapPoint;
@@ -143,6 +112,21 @@
     }
 }
 
+-(void) handleSingleTap:(UITapGestureRecognizer*) tap {
+    CGPoint location = [tap locationInView:self];
+    CGPoint origin = CGPointMake(self.scrollView.center.x - self.scrollView.bounds.size.width / 2,
+                                 self.scrollView.center.y - self.scrollView.bounds.size.height / 2);
+    
+    CGRect rect = CGRectMake(origin.x, origin.y, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    
+    BOOL withinBounds = CGRectContainsPoint(rect, location);
+    if (!withinBounds)
+    {
+        //delegate
+        [self.delegate dismissViewController];
+    }
+}
+
 #pragma mark - Constraints
 
 - (void)updateConstraints
@@ -153,7 +137,6 @@
     }
     [super updateConstraints];
 }
-
 
 
 - (void)toggleConstraintsForTraitCollection:(UITraitCollection *)traitCollection {
@@ -179,19 +162,15 @@
     
     NSMutableArray *constraints = [[NSMutableArray alloc] init];
     
-    [self.myImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        [constraints addObject:make.edges.equalTo(self.scrollView)];
-    }];
-    
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         [constraints addObject:make.width.equalTo(self.mas_width)];
         [constraints addObject:make.center.equalTo(self)];
         [constraints addObject:make.height.equalTo(self.mas_height).multipliedBy(0.5)];
     }];
     
-    //    [self.blurEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
-    //        [constraints addObject:make.edges.equalTo(self)];
-    //    }];
+    [self.myImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.width.height.equalTo(self.scrollView);
+    }];
     
     self.phonePortraitConstraints = [constraints copy];
 }
@@ -207,7 +186,7 @@
     }];
     
     [self.myImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        [constraints addObject:make.edges.equalTo(self.scrollView)];
+        [constraints addObject:make.edges.width.height.equalTo(self.scrollView)];
     }];
     
     self.phoneLandscapeConstraints = [constraints copy];

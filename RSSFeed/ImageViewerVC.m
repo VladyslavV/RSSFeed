@@ -7,7 +7,6 @@
 //
 
 #import "ImageViewerVC.h"
-#import "ImageViewerVCMainView.h"
 #import "Masonry.h"
 
 @interface ImageViewerVC ()
@@ -17,20 +16,20 @@
 
 @property (strong, nonatomic) ImageViewerViewModel* viewModel;
 
-
 @end
 
 @implementation ImageViewerVC
-
-UIButton* button;
 
 -(ImageViewerVCMainView*) mainView {
     if (_mainView == nil) {
         _mainView = [[ImageViewerVCMainView alloc] initWithViewModel:self.viewModel];
         _mainView.translatesAutoresizingMaskIntoConstraints = NO;
+        _mainView.delegate = self;
     }
     return _mainView;
 }
+
+#pragma mark - Init
 
 - (instancetype)initWithViewModel:(ImageViewerViewModel*) viewModel
 {
@@ -45,24 +44,16 @@ UIButton* button;
     [super viewDidLoad];
     
     [self.view addSubview:self.mainView];
-
-    button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(0, 0, 100, 100);
-    [button addTarget:self action:@selector(tap:) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor redColor];
-    [self.mainView addSubview:button];
     
+    [self setConstraints];
+    
+    [self.view setNeedsUpdateConstraints];
+}
+
+-(void) setConstraints {
     [self.mainView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
-    
-//    UIVisualEffect* blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-//    UIVisualEffectView * blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    blurEffectView.frame = self.view.frame;
-//    [self.view addSubview:blurEffectView];
-    
-    [self.view setNeedsUpdateConstraints];
 }
 
 #pragma mark - UIContentContainer protocol methods
@@ -73,7 +64,13 @@ UIButton* button;
 
 #pragma mark - Actions
 
--(void) tap:(UIButton*) sender {
+-(void) dismissController:(UIButton*) sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Main View Delegate 
+
+-(void) dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ImageViewerViewModel.h"
+#import "ImageViewerVCMainView.h"
 
-@interface ImageViewerVC : UIViewController
-
-@property (strong, nonatomic) UIImage* myImage;
+@interface ImageViewerVC : UIViewController <ImageViewerVCMainViewDelegate>
 
 - (instancetype)initWithViewModel:(ImageViewerViewModel*) viewModel;
 

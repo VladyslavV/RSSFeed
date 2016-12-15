@@ -9,7 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "ImageViewerViewModel.h"
 
+@protocol ImageViewerVCMainViewDelegate <NSObject>
+
+-(void) dismissViewController;
+
+@end
+
 @interface ImageViewerVCMainView : UIView <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+
+@property(weak, nonatomic) id <ImageViewerVCMainViewDelegate> delegate;
 
 - (instancetype)initWithViewModel:(ImageViewerViewModel*) viewModel;
 

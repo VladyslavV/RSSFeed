@@ -15,6 +15,6 @@
 - (instancetype)initWithURL:(NSURL*) imageURL;
 
 
--(void) setImage:(UIImageView*) imageView forScrollView:(UIScrollView*) scrollView;
+-(void) prepareScrollView:(void (^) (UIScrollView* scrollView, UIImageView* imageView)) callBack;
 
 @end
