@@ -96,7 +96,7 @@
     [self.viewModel setImage:self.myImageView forScrollView:self.scrollView];
     [self addGestureRecognizer:self.tapGestureRecognizer];
     
-   // [self addSubview:self.blurEffectView];
+    // [self addSubview:self.blurEffectView];
     //[self.blurEffectView addSubview:self.myImageView];
     //[self.viewModel setImage:self.myImageView];
 }
@@ -121,14 +121,25 @@
     return zoomScale;
 }
 
+-(CGRect) zoomToRectWithPoint:(CGPoint) tapPoint {
+    //CGFloat scale = MIN(self.scrollView.zoomScale * 2, self.scrollView.maximumZoomScale);
+    CGFloat scale = self.scrollView.maximumZoomScale; // zoom very close
+    CGSize scrollSize = self.scrollView.frame.size;
+    CGPoint point = tapPoint;
+    CGSize size = CGSizeMake(scrollSize.width / scale, scrollSize.height / scale);
+    CGPoint origin = CGPointMake(point.x - size.width / 2, point.y - size.height / 2);
+    CGRect rect = CGRectMake(origin.x, origin.y, size.width, size.height);
+    
+    return rect;
+}
 
 #pragma mark - Actions
 
--(void) handleDoubleTap:(UITapGestureRecognizer*) tapper {
+-(void) handleDoubleTap:(UITapGestureRecognizer*) tap {
     if (self.scrollView.zoomScale > 1) {
         [self.scrollView setZoomScale:[self normalZoomScale] animated:YES];
     } else {
-        [self.scrollView zoomToRect:CGRectMake( 0, 0, 100, 100) animated:YES];
+        [self.scrollView zoomToRect:[self zoomToRectWithPoint:[tap locationInView:self.myImageView]] animated:YES];
     }
 }
 
@@ -146,7 +157,7 @@
 
 
 - (void)toggleConstraintsForTraitCollection:(UITraitCollection *)traitCollection {
-
+    
     if ([traitCollection mk_matchesIpadPortrait]) {
         [self uninstallPhonePortraitConstraints];
         [self uninstallPhoneLandscapeConstraints];
@@ -181,7 +192,7 @@
     //    [self.blurEffectView mas_makeConstraints:^(MASConstraintMaker *make) {
     //        [constraints addObject:make.edges.equalTo(self)];
     //    }];
-
+    
     self.phonePortraitConstraints = [constraints copy];
 }
 
