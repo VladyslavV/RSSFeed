@@ -31,13 +31,17 @@
     return self;
 }
 
--(void) prepareScrollView:(void (^) (UIScrollView* scrollView, UIImageView* imageView)) callBack {
-    [[ImageDownloader sharedObject] fetchImageWithUrl:self.imageURL andCallBack:^(NSData *imageData) {
-        UIImage* image = [[UIImage alloc] initWithData:imageData];
+- (instancetype)initWithImage:(UIImage*) image
+{
+    self = [super init];
+    if (self) {
         self.myImageView.image = image;
-        //self.scrollView.contentSize = image.size;
-        callBack(self.scrollView, self.myImageView);
-    }];
+    }
+    return self;
+}
+
+-(void) prepareScrollView:(void (^) (UIScrollView* scrollView, UIImageView* imageView)) callBack {
+    callBack(self.scrollView, self.myImageView);
 }
 
 -(UIScrollView*) scrollView {
@@ -45,7 +49,7 @@
         _scrollView = [UIScrollView new];
         _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
         _scrollView.minimumZoomScale = 1.0;
-        _scrollView.maximumZoomScale = 5.0;
+        _scrollView.maximumZoomScale = 3.0;
         _scrollView.userInteractionEnabled = YES;
         _scrollView.contentMode = UIViewContentModeScaleToFill;
         _scrollView.backgroundColor = [UIColor lightGrayColor];

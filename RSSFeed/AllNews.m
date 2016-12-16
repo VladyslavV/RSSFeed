@@ -24,4 +24,8 @@
     [self.data addObject:newsItem];
 }
 
+-(void) clearData {
+    [self.data removeAllObjects];
+}
+
 @end

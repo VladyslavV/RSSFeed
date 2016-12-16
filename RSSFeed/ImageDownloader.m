@@ -12,11 +12,11 @@
 
 #pragma mark - Singleton
 
-+ (id)sharedObject {
-    static ImageDownloader *sharedObject = nil;
++ (instancetype)sharedObject {
+    static id sharedObject = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedObject = [[self alloc] init];
+        sharedObject = [[[self class] alloc] init];
     });
     return sharedObject;
 }

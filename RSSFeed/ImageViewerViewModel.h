@@ -11,9 +11,7 @@
 
 @interface ImageViewerViewModel : NSObject
 
-
-- (instancetype)initWithURL:(NSURL*) imageURL;
-
+- (instancetype)initWithImage:(UIImage*) image;
 
 -(void) prepareScrollView:(void (^) (UIScrollView* scrollView, UIImageView* imageView)) callBack;
 

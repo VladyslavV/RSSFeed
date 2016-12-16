@@ -14,5 +14,6 @@
 @property (nonatomic, strong, readonly) NSMutableArray* data;
 
 -(void) addItem:(NSMutableDictionary*) newItemDict;
+-(void) clearData;
 
 @end

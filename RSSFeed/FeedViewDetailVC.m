@@ -50,7 +50,6 @@
     }];
     
     // nav buttons
-    self.navigationController.navigationBar.topItem.title = NSLocalizedString(@"back.bar.button", nil); // back button
     self.navigationItem.rightBarButtonItem = self.mainView.barButtonOpenInSafari;
     
     [self.view setNeedsUpdateConstraints];
@@ -65,7 +64,8 @@
 #pragma mark - Image Tapped Delegate
 
 -(void) imageTapped {
-    ImageViewerViewModel* imageViewerViewModel = [[ImageViewerViewModel alloc] initWithURL:self.feedDetailViewModel.imageURL];
+    ImageViewerViewModel* imageViewerViewModel = [[ImageViewerViewModel alloc] initWithImage:self.mainView.newsImageView.image];
+    
     ImageViewerVC* vc = [[ImageViewerVC alloc] initWithViewModel:imageViewerViewModel];
     [self presentViewController:vc animated:YES completion:nil];
 }

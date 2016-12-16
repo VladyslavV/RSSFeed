@@ -10,7 +10,7 @@
 #import "FeedViewDetailVC.h"
 
 
-@interface FeedViewController () 
+@interface FeedViewController ()
 //UI
 @property (strong, nonatomic) FeedView* feedView;
 
@@ -61,7 +61,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.feedView];
     [self.feedViewModel updateModel];
+    self.navigationItem.title = NSLocalizedString(@"navigationbar.main.title", nil);
 }
-
 
 @end

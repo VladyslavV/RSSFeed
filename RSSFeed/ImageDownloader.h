@@ -10,7 +10,7 @@
 
 @interface ImageDownloader : NSObject
 
-+ (id)sharedObject;
++ (instancetype)sharedObject;
 
 
 -(void) fetchImageWithUrl:(NSURL*) imgageUrl andCallBack:( void (^)(NSData* imageData)) completion;

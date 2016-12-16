@@ -11,7 +11,7 @@
 #import "UITraitCollection+MKAdditions.h"
 #import "ImageDownloader.h"
 
-@interface FeedViewDetailMainView() 
+@interface FeedViewDetailMainView()
 
 @property (strong, nonatomic) FeedDetailViewModel* feedDetailViewModel;
 
@@ -34,6 +34,8 @@
 
 @implementation FeedViewDetailMainView
 
+static void * XXContext = &XXContext;
+
 #pragma mark - Create Views
 
 -(UIButton*) shareSocialButton {
@@ -48,8 +50,21 @@
         UIColor *lightBlueColor = [UIColor colorWithRed:102.0/255.0 green:178.0/255.0 blue:255.0/255.0 alpha:1.0];
         [_shareSocialButton setTitleColor:lightBlueColor forState:UIControlStateNormal];
         [[_shareSocialButton layer] setBorderColor:lightBlueColor.CGColor];
+        [_shareSocialButton addObserver:self
+                             forKeyPath:NSStringFromSelector(@selector(bounds))
+                                options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionPrior
+                                context:XXContext];
     }
     return _shareSocialButton;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == XXContext) {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(bounds))]) {
+            self.shareSocialButton.layer.cornerRadius = self.shareSocialButton.frame.size.width / 10.0f;
+        }
+    }
+    
 }
 
 -(UIVisualEffectView*) blurView {
@@ -160,9 +175,9 @@
             UIImage* image = [UIImage imageWithData:imageData];
             self.newsImageView.image = image;
         }];
-    
+        
         [self.newsImageView addGestureRecognizer:self.tapGestureRecongnizer];
-
+        
         [self setNeedsUpdateConstraints];
     }
     return self;
@@ -262,13 +277,9 @@
         [constraints addObject:make.height.equalTo(self.mas_height).multipliedBy(0.1)];
         [constraints addObject:make.bottom.equalTo(self.mas_bottom).with.offset(-30)];
     }];
-
-    [self performSelector:@selector(makeButtonRounded) withObject:nil afterDelay:0.2f];
+    
+    
     self.phonePortraitConstraints = [constraints copy];
-}
-
--(void) makeButtonRounded {
-    self.shareSocialButton.layer.cornerRadius = self.shareSocialButton.frame.size.width / 10.0f;
 }
 
 //landscape constraints
@@ -311,7 +322,6 @@
         [constraints addObject:make.bottom.equalTo(self.pubDateLabel.mas_top).with.offset(-10)];
     }];
     
-    [self makeButtonRounded];
     self.phoneLandscapeConstraints = [constraints copy];
 }
 
@@ -352,7 +362,6 @@
         [constraints addObject:make.bottom.equalTo(self.mas_bottom).with.offset(-30)];
     }];
     
-    [self performSelector:@selector(makeButtonRounded) withObject:nil afterDelay:0.2f];
     self.iPadPortraitConstraints = [constraints copy];
 }
 
@@ -368,5 +377,10 @@
     }
 }
 
+#pragma mark - Dealloc
+
+-(void)dealloc {
+    [self.shareSocialButton removeObserver:self forKeyPath:@"bounds"];
+}
 
 @end

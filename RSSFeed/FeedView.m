@@ -8,12 +8,12 @@
 
 #import "FeedView.h"
 #import "Masonry.h"
+#import <objc/message.h>
 
 @interface FeedView () <UITableViewDelegate, UITableViewDataSource, UITraitEnvironment, UISearchBarDelegate>
 
 @property (nonatomic, strong) UITableView* tableView;
 @property (strong, nonatomic) UISearchBar* searchBar;
-
 @end
 
 @implementation FeedView
@@ -28,6 +28,20 @@
     return _searchBar;
 }
 
+-(UIRefreshControl*) refrechControl {
+    if (_refrechControl == nil) {
+        _refrechControl = [UIRefreshControl new];
+        [_refrechControl addTarget:self
+                            action:@selector(updateModel)
+                  forControlEvents:UIControlEventValueChanged];
+    }
+    return _refrechControl;
+}
+
+-(void) updateModel {
+    [self.feedViewModel updateModel];
+}
+
 -(UITableView*) tableView {
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
@@ -35,15 +49,19 @@
         _tableView.dataSource = self;
         _tableView.estimatedRowHeight = 300.0;
         _tableView.rowHeight = UITableViewAutomaticDimension;
+        
         [self addSubview:_tableView];
+        [_tableView addSubview:self.refrechControl];
         [self addSubview:self.searchBar];
     }
     return _tableView;
 }
 
+
 -(void) update {
     [self.tableView reloadData];
     self.searchBar.placeholder = [self.feedViewModel searchBarPlaceholder];
+    [self.refrechControl endRefreshing];
 }
 
 #pragma mark - Trait Collection Delegate Methods

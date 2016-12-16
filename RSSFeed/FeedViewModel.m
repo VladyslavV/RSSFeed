@@ -29,6 +29,7 @@
 }
 
 -(void) updateModel {
+    [self.allNews  clearData];
     [self.fetcher fetchData];
 }
 
@@ -56,7 +57,7 @@
     NewsItem* item = self.filteredNews[indexPath.row];
     cell.titleLabel.text = item.title;
     cell.descriptionLabel.text = item.newsDescription;
-    cell.numberLabel.text = [NSString stringWithFormat:@"%zd", indexPath.row];
+    cell.numberLabel.text = [NSString stringWithFormat:@"%zd", indexPath.row + 1];
     return cell;
 }
 

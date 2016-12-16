@@ -18,6 +18,8 @@
 @interface FeedView : UIView
 
 -(void) update;
+@property (strong, nonatomic) UIRefreshControl *refrechControl;
+
 
 @property(strong, nonatomic) FeedViewModel* feedViewModel;
 @property(weak, nonatomic) id <FeedViewDelegate> delegate;
