@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2659" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="NewsItemCD" representedClassName="NewsItemCD" syncable="YES" codeGenerationType="class">
+        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pubData" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="NewsItemCD" positionX="-63" positionY="-18" width="128" height="120"/>
+    </elements>
+</model>
