@@ -7,11 +7,18 @@
 //
 
 #import "Fetcher.h"
+#import "AppDelegate.h"
+#import "NewsItemCD+CoreDataClass.h"
 
 @interface Fetcher () <NSXMLParserDelegate>
 
-@property (nonatomic, strong)  NSMutableDictionary* currentNewsItemDictionary;
+@property (nonatomic, strong)  NSMutableDictionary* reusableNewsItemDictionary;
 @property (nonatomic, strong, readwrite)  AllNews* allNews;
+
+
+@property (nonatomic, strong)  NSMutableArray* arrayOfNewsDictionaries;
+
+@property (strong, nonatomic) NSManagedObjectContext* managedObjectContext;
 
 @end
 
@@ -21,7 +28,22 @@ BOOL startWritingData = NO;
 static NSString* dataURl = @"http://feeds.bbci.co.uk/news/rss.xml?edition=int";
 NSMutableString* currentNodeContent;
 
+
 #pragma mark - Init variables
+
+-(NSMutableArray*) arrayOfNewsDictionaries {
+    if (_arrayOfNewsDictionaries == nil) {
+        _arrayOfNewsDictionaries = [NSMutableArray new];
+    }
+    return _arrayOfNewsDictionaries;
+}
+
+-(NSManagedObjectContext*) managedObjectContext {
+    if (_managedObjectContext == nil) {
+        _managedObjectContext = [(AppDelegate*) [UIApplication sharedApplication] getContext];
+    }
+    return _managedObjectContext;
+}
 
 -(AllNews*) allNews {
     if (_allNews == nil) {
@@ -30,11 +52,11 @@ NSMutableString* currentNodeContent;
     return _allNews;
 }
 
--(NSMutableDictionary*) currentNewsItemDictionary {
-    if (_currentNewsItemDictionary == nil) {
-        _currentNewsItemDictionary = [NSMutableDictionary new];
+-(NSMutableDictionary*) reusableNewsItemDictionary {
+    if (_reusableNewsItemDictionary == nil) {
+        _reusableNewsItemDictionary = [NSMutableDictionary new];
     }
-    return _currentNewsItemDictionary;
+    return _reusableNewsItemDictionary;
 }
 
 #pragma mark - Fetch Methods
@@ -67,23 +89,35 @@ NSMutableString* currentNodeContent;
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate allNewsParsed:self.allNews];
+
+        // pass all news dictionaries to fill core data
+        for (NSMutableDictionary* dict in self.arrayOfNewsDictionaries) {
+            [NewsItemCD publicInitWithDictionary:dict];
+        }
+        [self.managedObjectContext save:nil];
+        
         startWritingData = NO;
     });
 }
 
+
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
-    
+ 
     if ([elementName isEqualToString:@"item"]) {
         // pass dict with one news item
-        if (startWritingData && self.currentNewsItemDictionary.count != 0) {
-            [self.allNews addItem:[self.currentNewsItemDictionary mutableCopy]];
-            [self.currentNewsItemDictionary removeAllObjects];
+        if (startWritingData && self.reusableNewsItemDictionary.count != 0) {
+            // simple model
+            [self.allNews addItem:[self.reusableNewsItemDictionary mutableCopy]];
+            
+            // save news dicts to save them in core data in main thread in the future
+            [self.arrayOfNewsDictionaries addObject:self.reusableNewsItemDictionary];
+            [self.reusableNewsItemDictionary removeAllObjects];
         }
         startWritingData = YES;
     }
     
     if ([elementName isEqualToString:@"media:thumbnail"]) {
-        [self.currentNewsItemDictionary setObject:attributeDict[@"url"] forKey:@"imageURL"];
+        [self.reusableNewsItemDictionary setObject:attributeDict[@"url"] forKey:@"imageURL"];
     }
 }
 
@@ -91,19 +125,19 @@ NSMutableString* currentNodeContent;
     
     if (startWritingData ) {
         if ([elementName isEqualToString:@"title"]) {
-            [self.currentNewsItemDictionary setObject:currentNodeContent forKey:@"title"];
+            [self.reusableNewsItemDictionary setObject:currentNodeContent forKey:@"title"];
         }
         
         if ([elementName isEqualToString:@"description"]) {
-            [self.currentNewsItemDictionary setObject:currentNodeContent forKey:@"newsDescription"];
+            [self.reusableNewsItemDictionary setObject:currentNodeContent forKey:@"newsDescription"];
         }
         
         if ([elementName isEqualToString:@"link"]) {
-            [self.currentNewsItemDictionary setObject:currentNodeContent forKey:@"newsLink"];
+            [self.reusableNewsItemDictionary setObject:currentNodeContent forKey:@"newsLink"];
         }
         
         if ([elementName isEqualToString:@"pubDate"]) {
-            [self.currentNewsItemDictionary setObject:currentNodeContent forKey:@"pubDate"];
+            [self.reusableNewsItemDictionary setObject:currentNodeContent forKey:@"pubDate"];
         }
     }
 }

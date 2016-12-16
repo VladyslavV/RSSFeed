@@ -11,6 +11,8 @@
 
 @interface AppDelegate ()
 
+@property (readonly, strong) NSPersistentContainer *persistentContainer;
+
 @end
 
 @implementation AppDelegate
@@ -87,6 +89,10 @@
     }
     
     return _persistentContainer;
+}
+
+-(NSManagedObjectContext*) getContext {
+    return self.persistentContainer.viewContext;
 }
 
 #pragma mark - Core Data Saving support
