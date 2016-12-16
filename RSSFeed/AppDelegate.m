@@ -91,6 +91,12 @@
     return _persistentContainer;
 }
 
+#pragma mark - Core Data Getters
+
+-(NSPersistentStoreCoordinator*) getStoreCoordinator {
+    return [[self persistentContainer] persistentStoreCoordinator];
+}
+
 -(NSManagedObjectContext*) getContext {
     return self.persistentContainer.viewContext;
 }
@@ -99,6 +105,7 @@
 
 - (void)saveContext {
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
+    
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.

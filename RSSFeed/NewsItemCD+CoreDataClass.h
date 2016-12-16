@@ -15,9 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype _Nonnull) publicInitWithDictionary:(NSDictionary * _Nonnull)theDictionary;
 
-+ (NSArray * _Nonnull)getObjectsArrayWithPredicate:(NSPredicate * _Nullable)thePredicate
++ (NSArray * _Nonnull) getObjectsArrayWithPredicate:(NSPredicate * _Nullable)thePredicate
                               propertyToFetchArray:(NSArray<NSString *> * _Nullable)thePropertyToFetchArray
                                sortDescriptorArray:(NSArray<NSSortDescriptor *> * _Nullable)theSortDescriptorArray;
+
+
++ (void) cleanAll;
+
 
 @end
 

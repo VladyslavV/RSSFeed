@@ -16,11 +16,9 @@
 @property (nonatomic, strong, readwrite) NSString* pubDate;
 @property (nonatomic, strong, readwrite) NSString* imageURL;
 
-
 @end
 
 @implementation NewsItem
-
 
 - (instancetype)initWithDict:(NSMutableDictionary*) nodeDict;
 {

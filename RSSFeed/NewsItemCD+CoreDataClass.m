@@ -30,8 +30,23 @@
         
         theFetchRequest.sortDescriptors = theSortDescriptorArray;
     }
-    NSManagedObjectContext *theMOC = [((AppDelegate *)[UIApplication sharedApplication]) getContext];
+    NSManagedObjectContext *theMOC = [((AppDelegate *)[UIApplication sharedApplication].delegate) getContext];
     return [theMOC executeFetchRequest:theFetchRequest error:nil];
+}
+
+#pragma mark - Clean
+
++ (void) cleanAll {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName: NSStringFromClass([self class])];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    
+    NSError *deleteError = nil;
+    NSPersistentStoreCoordinator *storeCoordinator = [((AppDelegate *)[UIApplication sharedApplication].delegate) getStoreCoordinator];
+    NSManagedObjectContext *theMOC = [((AppDelegate *)[UIApplication sharedApplication].delegate) getContext];
+
+    [storeCoordinator executeRequest:delete withContext:theMOC error:&deleteError];
+    
+    [theMOC save:nil];
 }
 
 #pragma mark - Create Object With Dictionary
@@ -43,7 +58,7 @@
 
 - (instancetype _Nonnull)initWithDictionary:(NSDictionary * _Nonnull)theDictionary
 {
-    NSManagedObjectContext *theMOC = [((AppDelegate *)[UIApplication sharedApplication]) getContext];
+    NSManagedObjectContext *theMOC = [((AppDelegate *)[UIApplication sharedApplication].delegate) getContext];
     self = [self initWithEntity:[NSEntityDescription entityForName:NSStringFromClass([self class])
                                             inManagedObjectContext:theMOC]
  insertIntoManagedObjectContext:theMOC];
@@ -58,21 +73,19 @@
     id theValue;
     
     theValue = theDictionary[@"imageURL"];
-    self.title = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
-    
+    self.imageURL = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
     theValue = theDictionary[@"title"];
-    self.newsDescription = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
+    self.title = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
     
     theValue = theDictionary[@"newsDescription"];
     self.newsDescription = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
     theValue = theDictionary[@"newsLink"];
-    self.newsDescription = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
-    
+    self.newsLink = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
     theValue = theDictionary[@"pubDate"];
-    self.newsDescription = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
+    self.pubDate = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
 }
 @end

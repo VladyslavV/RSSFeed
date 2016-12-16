@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-
+-(NSPersistentStoreCoordinator*) getStoreCoordinator;
 -(NSManagedObjectContext*) getContext;
 
 - (void)saveContext;

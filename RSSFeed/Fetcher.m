@@ -40,7 +40,7 @@ NSMutableString* currentNodeContent;
 
 -(NSManagedObjectContext*) managedObjectContext {
     if (_managedObjectContext == nil) {
-        _managedObjectContext = [(AppDelegate*) [UIApplication sharedApplication] getContext];
+        _managedObjectContext = [(AppDelegate*) [UIApplication sharedApplication].delegate getContext];
     }
     return _managedObjectContext;
 }
@@ -91,10 +91,24 @@ NSMutableString* currentNodeContent;
         [self.delegate allNewsParsed:self.allNews];
 
         // pass all news dictionaries to fill core data
-        for (NSMutableDictionary* dict in self.arrayOfNewsDictionaries) {
-            [NewsItemCD publicInitWithDictionary:dict];
+//        for (NSMutableDictionary* dict in self.arrayOfNewsDictionaries) {
+//            [NewsItemCD publicInitWithDictionary:dict];
+//        }
+//        [self.managedObjectContext save:nil];
+//
+        NSSortDescriptor* sortByDate = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+        NSArray* CoreData = [NewsItemCD getObjectsArrayWithPredicate:nil propertyToFetchArray:nil sortDescriptorArray:@[sortByDate]];
+//        
+        NSLog(@"%lu", (unsigned long)CoreData.count);
+
+        for (NewsItemCD* item in CoreData) {
+            NSLog(@"%@", item.title);
+            NSLog(@"%@", item.newsDescription);
         }
-        [self.managedObjectContext save:nil];
+        
+
+        
+ //       [NewsItemCD cleanAll];
         
         startWritingData = NO;
     });
@@ -110,7 +124,9 @@ NSMutableString* currentNodeContent;
             [self.allNews addItem:[self.reusableNewsItemDictionary mutableCopy]];
             
             // save news dicts to save them in core data in main thread in the future
-            [self.arrayOfNewsDictionaries addObject:self.reusableNewsItemDictionary];
+            [self.arrayOfNewsDictionaries addObject:[self.reusableNewsItemDictionary mutableCopy]];
+            
+            //clean reusable dict
             [self.reusableNewsItemDictionary removeAllObjects];
         }
         startWritingData = YES;
