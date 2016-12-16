@@ -43,7 +43,7 @@
     NSError *deleteError = nil;
     NSPersistentStoreCoordinator *storeCoordinator = [((AppDelegate *)[UIApplication sharedApplication].delegate) getStoreCoordinator];
     NSManagedObjectContext *theMOC = [((AppDelegate *)[UIApplication sharedApplication].delegate) getContext];
-
+    
     [storeCoordinator executeRequest:delete withContext:theMOC error:&deleteError];
     
     [theMOC save:nil];
@@ -78,7 +78,6 @@
     theValue = theDictionary[@"title"];
     self.title = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
-    
     theValue = theDictionary[@"newsDescription"];
     self.newsDescription = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
@@ -86,6 +85,10 @@
     self.newsLink = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
     theValue = theDictionary[@"pubDate"];
-    self.pubDate = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"EEE, dd MM yyyy HH:mm:ss zzz"];
+    NSDate *myDate = [df dateFromString: theValue];
+    self.pubDate = myDate;
 }
 @end

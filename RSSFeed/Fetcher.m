@@ -96,16 +96,17 @@ NSMutableString* currentNodeContent;
 //        }
 //        [self.managedObjectContext save:nil];
 //
-        NSSortDescriptor* sortByDate = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    
+        NSSortDescriptor* sortByDate = [[NSSortDescriptor alloc] initWithKey:@"pubDate" ascending:YES];
         NSArray* CoreData = [NewsItemCD getObjectsArrayWithPredicate:nil propertyToFetchArray:nil sortDescriptorArray:@[sortByDate]];
 //        
         NSLog(@"%lu", (unsigned long)CoreData.count);
 
         for (NewsItemCD* item in CoreData) {
             NSLog(@"%@", item.title);
-            NSLog(@"%@", item.newsDescription);
+            NSLog(@"%@", item.pubDate);
         }
-        
+    
 
         
  //       [NewsItemCD cleanAll];

@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *title;
 @property (nullable, nonatomic, copy) NSString *newsDescription;
 @property (nullable, nonatomic, copy) NSString *newsLink;
-@property (nullable, nonatomic, copy) NSString *pubDate;
+@property (nullable, nonatomic, copy) NSDate *pubDate; 
 @property (nullable, nonatomic, copy) NSString *imageURL;
 
 @end
