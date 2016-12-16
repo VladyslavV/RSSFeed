@@ -67,6 +67,7 @@ NSMutableString* currentNodeContent;
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate allNewsParsed:self.allNews];
+        startWritingData = NO;
     });
 }
 
