@@ -13,13 +13,13 @@
 
 -(void) cellAtRowWasSelected:(NSInteger)cell;
 
+
 @end
 
 @interface FeedView : UIView
 
--(void) update;
+-(void) updateView;
 @property (strong, nonatomic) UIRefreshControl *refrechControl;
-
 
 @property(strong, nonatomic) FeedViewModel* feedViewModel;
 @property(weak, nonatomic) id <FeedViewDelegate> delegate;

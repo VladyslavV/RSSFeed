@@ -10,6 +10,8 @@
 
 @interface NewsItem()
 
+@property (strong, nonatomic, readwrite) NSMutableDictionary * dict;
+
 @property (nonatomic, strong, readwrite) NSString* title;
 @property (nonatomic, strong, readwrite) NSString* newsDescription;
 @property (nonatomic, strong, readwrite) NSString* newsLink;
@@ -24,6 +26,7 @@
 {
     self = [super init];
     if (self) {
+        _dict = nodeDict;
         self.imageURL = nodeDict[@"imageURL"];
         self.newsDescription = nodeDict[@"newsDescription"];
         self.pubDate = nodeDict[@"pubDate"];
@@ -31,6 +34,10 @@
         self.title = nodeDict[@"title"];
     }
     return self;
+}
+
+- (NSMutableDictionary*) getDict {
+    return self.dict;
 }
 
 @end

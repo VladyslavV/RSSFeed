@@ -2,12 +2,13 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2659" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="NewsItemCD" representedClassName="NewsItemCD" syncable="YES">
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="newsDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="newsLink" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pubDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="pubDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="NewsItemCD" positionX="-45" positionY="0" width="128" height="120"/>
+        <element name="NewsItemCD" positionX="-45" positionY="0" width="128" height="135"/>
     </elements>
 </model>

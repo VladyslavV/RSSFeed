@@ -19,5 +19,6 @@
 @dynamic newsLink;
 @dynamic pubDate;
 @dynamic imageURL;
+@dynamic index;
 
 @end

@@ -39,6 +39,7 @@
 }
 
 -(void) updateModel {
+    self.searchBar.text = @"";
     [self.feedViewModel updateModel];
 }
 
@@ -57,8 +58,7 @@
     return _tableView;
 }
 
-
--(void) update {
+-(void) updateView {
     [self.tableView reloadData];
     self.searchBar.placeholder = [self.feedViewModel searchBarPlaceholder];
     [self.refrechControl endRefreshing];
@@ -86,9 +86,15 @@
 #pragma mark - Search Bar Delegate Methods
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [searchBar setShowsCancelButton:YES animated:YES];
     [self.feedViewModel filterTableWithString:searchBar.text withCompletion:^{
         [self.tableView reloadData];
     }];
+}
+
+-(void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
 }
 
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -96,9 +102,16 @@
 }
 
 -(void) searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:NO animated:YES];
     [self.searchBar resignFirstResponder];
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
+{
+    [self updateModel];
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
 
 #pragma mark - TableView Delegate Methods
 

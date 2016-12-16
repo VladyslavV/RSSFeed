@@ -85,10 +85,6 @@
     self.newsLink = theValue && theValue != [NSNull null] ? [NSString stringWithFormat:@"%@", theValue] : nil;
     
     theValue = theDictionary[@"pubDate"];
-    
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"EEE, dd MM yyyy HH:mm:ss zzz"];
-    NSDate *myDate = [df dateFromString: theValue];
-    self.pubDate = myDate;
+    self.pubDate = theValue;
 }
 @end

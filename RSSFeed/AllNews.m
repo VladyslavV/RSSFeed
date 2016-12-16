@@ -10,7 +10,6 @@
 
 @implementation AllNews
 
-@synthesize data = _data;
 
 -(NSMutableArray*) data {
     if (_data == nil) {

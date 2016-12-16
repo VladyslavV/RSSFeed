@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "NewsItemCD+CoreDataClass.h"
 
+
 @interface Fetcher () <NSXMLParserDelegate>
 
 @property (nonatomic, strong)  NSMutableDictionary* reusableNewsItemDictionary;
@@ -23,6 +24,7 @@
 @end
 
 @implementation Fetcher
+
 
 BOOL startWritingData = NO;
 static NSString* dataURl = @"http://feeds.bbci.co.uk/news/rss.xml?edition=int";
@@ -89,32 +91,9 @@ NSMutableString* currentNodeContent;
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate allNewsParsed:self.allNews];
-
-        // pass all news dictionaries to fill core data
-//        for (NSMutableDictionary* dict in self.arrayOfNewsDictionaries) {
-//            [NewsItemCD publicInitWithDictionary:dict];
-//        }
-//        [self.managedObjectContext save:nil];
-//
-    
-        NSSortDescriptor* sortByDate = [[NSSortDescriptor alloc] initWithKey:@"pubDate" ascending:YES];
-        NSArray* CoreData = [NewsItemCD getObjectsArrayWithPredicate:nil propertyToFetchArray:nil sortDescriptorArray:@[sortByDate]];
-//        
-        NSLog(@"%lu", (unsigned long)CoreData.count);
-
-        for (NewsItemCD* item in CoreData) {
-            NSLog(@"%@", item.title);
-            NSLog(@"%@", item.pubDate);
-        }
-    
-
-        
- //       [NewsItemCD cleanAll];
-        
         startWritingData = NO;
     });
 }
-
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
  

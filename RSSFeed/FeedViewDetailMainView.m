@@ -87,7 +87,6 @@ static void * XXContext = &XXContext;
 
 -(NSAttributedString*) getAttributedString:(NSString*) oldString {
     NSMutableAttributedString* newString = [[NSMutableAttributedString alloc] initWithString:oldString];
-    
     [newString addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, oldString.length)];
     [newString addAttribute:NSStrokeWidthAttributeName value:@-10.0 range:NSMakeRange(0, oldString.length) ];
     return newString;

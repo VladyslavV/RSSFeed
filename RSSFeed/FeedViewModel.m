@@ -9,6 +9,8 @@
 #import "FeedViewModel.h"
 #import "Fetcher.h"
 #import "CustomTableViewCell.h"
+#import "NewsItemCD+CoreDataClass.h"
+#import "AppDelegate.h"
 
 @interface FeedViewModel() <FetcherDelegate>
 
@@ -20,6 +22,8 @@
 
 @implementation FeedViewModel
 
+BOOL loadFromCoreData = YES;
+
 -(Fetcher*) fetcher {
     if (_fetcher == nil) {
         _fetcher = [Fetcher new];
@@ -28,9 +32,18 @@
     return _fetcher;
 }
 
+
+#pragma mark - Chose where to load data from
+
 -(void) updateModel {
-    [self.allNews  clearData];
-    [self.fetcher fetchData];
+    if (loadFromCoreData) {
+        [self loadDataFromCoreData];
+    }
+    else {
+        self.filteredNews = self.allNews.data;
+        [self.allNews  clearData];
+        [self.fetcher fetchData];
+    }
 }
 
 -(NSString*) searchBarPlaceholder {
@@ -43,10 +56,41 @@
     self.allNews = allNews;
     self.filteredNews = self.allNews.data;
     [self.delegate modelWasUpdated];
+    [self writeToCoreData];
 }
 
-#pragma mark - Table View
+#pragma mark - Core Data 
 
+-(void) writeToCoreData {
+    [self cleanCoreData];
+    // pass all news dictionaries to fill core data
+    NSLog(@"%lu", (unsigned long)self.allNews.data.count);
+    for (int i = 0; i < self.allNews.data.count; i++) {
+        NewsItem* newsItem = self.allNews.data[i];
+        NSDictionary* dict = newsItem.dict;
+        NewsItemCD* item = [NewsItemCD publicInitWithDictionary:dict];
+        item.index = [NSString stringWithFormat:@"%d", i];
+    }
+    NSManagedObjectContext* MOC = [(AppDelegate*)[UIApplication sharedApplication].delegate getContext];
+    [MOC save:nil];
+}
+
+-(void) loadDataFromCoreData {
+    NSSortDescriptor* sortByIndex = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES selector:@selector(localizedStandardCompare:)];
+    NSArray* coreData = [NewsItemCD getObjectsArrayWithPredicate:nil propertyToFetchArray:nil sortDescriptorArray:@[sortByIndex]];
+    NSLog(@"%lu", (unsigned long)coreData.count);
+    self.allNews = [[AllNews alloc] init];
+    self.allNews.data = [coreData mutableCopy];
+    self.filteredNews =  self.allNews.data;
+    [self.delegate modelWasUpdated];
+}
+
+-(void) cleanCoreData {
+    [NewsItemCD cleanAll];
+}
+
+
+#pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.filteredNews.count;
@@ -64,7 +108,7 @@
 #pragma mark - Create Feed Detail View Model
 
 -(FeedDetailViewModel*) createFeedDetailViewModelForCell:(NSInteger) cellIndex {
-    NewsItem* item = self.allNews.data[cellIndex];
+    NewsItem* item = self.filteredNews[cellIndex];
     FeedDetailViewModel* feedDetailViewModel = [[FeedDetailViewModel alloc] initWithItem:item];
     return feedDetailViewModel;
 }
@@ -76,7 +120,7 @@
     dispatch_async(queue, ^{
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K beginswith[c] %@", NSStringFromSelector(@selector(title)), searchString];
         self.filteredNews = [self.allNews.data filteredArrayUsingPredicate:predicate];
-        if (self.filteredNews.count < 1) {
+        if (self.filteredNews.count < 1 && [searchString length] < 1) {
             self.filteredNews = self.allNews.data;
         }
         dispatch_sync(dispatch_get_main_queue(), ^{

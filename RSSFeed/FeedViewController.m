@@ -32,7 +32,7 @@
 #pragma mark - FeedViewModel Delegate
 
 -(void) modelWasUpdated {
-    [self.feedView update];
+    [self.feedView updateView];
 }
 
 #pragma mark - Init Variables

@@ -11,7 +11,7 @@
 
 @interface AllNews : NSObject
 
-@property (nonatomic, strong, readonly) NSMutableArray* data;
+@property (nonatomic, strong) NSMutableArray* data;
 
 -(void) addItem:(NSMutableDictionary*) newItemDict;
 -(void) clearData;
