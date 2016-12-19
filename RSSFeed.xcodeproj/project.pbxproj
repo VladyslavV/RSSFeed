@@ -16,6 +16,8 @@
 		3115D5C51E040A1E0046A484 /* NewsItemCD+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3115D5C31E040A1E0046A484 /* NewsItemCD+CoreDataProperties.m */; };
 		31162C7A1DF8527A00AD1DAA /* FeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31162C791DF8527A00AD1DAA /* FeedView.m */; };
 		31162C7E1DF86C2C00AD1DAA /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */; };
+		31290F431E07EF500094D562 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31290F421E07EF500094D562 /* SplitViewController.m */; };
+		31290F481E07EFFF0094D562 /* SplitMasterTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31290F471E07EFFF0094D562 /* SplitMasterTVC.m */; };
 		312B7A321E057DD100684F41 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 312B7A311E057DD100684F41 /* Reachability.m */; };
 		312B7A351E057DF200684F41 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312B7A341E057DF200684F41 /* SystemConfiguration.framework */; };
 		31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */; };
@@ -54,6 +56,10 @@
 		31162C791DF8527A00AD1DAA /* FeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedView.m; sourceTree = "<group>"; };
 		31162C7C1DF86C2C00AD1DAA /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		31290F411E07EF500094D562 /* SplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewController.h; sourceTree = "<group>"; };
+		31290F421E07EF500094D562 /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
+		31290F461E07EFFF0094D562 /* SplitMasterTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitMasterTVC.h; sourceTree = "<group>"; };
+		31290F471E07EFFF0094D562 /* SplitMasterTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitMasterTVC.m; sourceTree = "<group>"; };
 		312B7A301E057DD100684F41 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		312B7A311E057DD100684F41 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		312B7A341E057DF200684F41 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -133,6 +139,27 @@
 				3115D5C31E040A1E0046A484 /* NewsItemCD+CoreDataProperties.m */,
 			);
 			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		31290F441E07EF530094D562 /* Split VC */ = {
+			isa = PBXGroup;
+			children = (
+				31290F411E07EF500094D562 /* SplitViewController.h */,
+				31290F421E07EF500094D562 /* SplitViewController.m */,
+				31290F461E07EFFF0094D562 /* SplitMasterTVC.h */,
+				31290F471E07EFFF0094D562 /* SplitMasterTVC.m */,
+			);
+			name = "Split VC";
+			sourceTree = "<group>";
+		};
+		31290F451E07EF670094D562 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				31290F441E07EF530094D562 /* Split VC */,
+				317AC1A51DF835CD001645FC /* Feed VC */,
+				31573FC01DFAF82700882D43 /* Feed Detail VC */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		312B7A331E057DD500684F41 /* Reachability */ = {
@@ -226,8 +253,7 @@
 				312B7A331E057DD500684F41 /* Reachability */,
 				3100BED01E0145D0006DBE6D /* Singletons */,
 				31573FC71DFE9D8000882D43 /* Categories */,
-				31573FC01DFAF82700882D43 /* Feed Detail VC */,
-				317AC1A51DF835CD001645FC /* Feed VC */,
+				31290F451E07EF670094D562 /* View Controllers */,
 				317AC1A31DF835BD001645FC /* Fetcher */,
 				317AC1A41DF835C4001645FC /* Model */,
 				3115D59E1E03FFCA0046A484 /* Core Data */,
@@ -404,8 +430,10 @@
 				31573FC61DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m in Sources */,
 				31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */,
 				312B7A321E057DD100684F41 /* Reachability.m in Sources */,
+				31290F431E07EF500094D562 /* SplitViewController.m in Sources */,
 				31DCD2761DF72814003601C8 /* NewsItem.m in Sources */,
 				31DCD2591DF6BA9C003601C8 /* main.m in Sources */,
+				31290F481E07EFFF0094D562 /* SplitMasterTVC.m in Sources */,
 				3100BED31E0148D2006DBE6D /* ImageViewerViewModel.m in Sources */,
 				31573FCA1DFEE79700882D43 /* FeedViewDetailMainView.m in Sources */,
 				31573FC31DFAF86B00882D43 /* FeedDetailViewModel.m in Sources */,

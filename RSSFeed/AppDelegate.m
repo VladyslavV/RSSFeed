@@ -8,10 +8,13 @@
 
 #import "AppDelegate.h"
 #import "FeedViewController.h"
+#import "SplitViewController.h"
+#import "SplitMasterTVC.h"
 
 @interface AppDelegate ()
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
+
 
 @end
 
@@ -22,11 +25,29 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window makeKeyAndVisible];
+//
+//    UINavigationController *navigationController = [[UINavigationController alloc]
+//                                                    initWithRootViewController:[FeedViewController new]];
+//    
+//    [self.window setRootViewController:navigationController];
     
-    UINavigationController *navigationController = [[UINavigationController alloc]
-                                                    initWithRootViewController:[FeedViewController new]];
+    SplitViewController* splitViewController = [[SplitViewController alloc] init];
+    
+    SplitMasterTVC *root = [[SplitMasterTVC alloc] init];
+    FeedViewController *detail = [[FeedViewController alloc] init];
+    
+    UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:root];
+    
+    UINavigationController *detailNav = [[UINavigationController alloc] initWithRootViewController:detail];
+    
+    splitViewController.viewControllers = [NSArray arrayWithObjects:rootNav, detailNav, nil];
+    //navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
+    //splitViewController.delegate = detail;
+    
+    [self.window setRootViewController:splitViewController];
 
-    [self.window setRootViewController:navigationController];
+    
+   // [window addSubview:splitViewController.view];
 
     return YES;
 }
