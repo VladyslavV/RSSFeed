@@ -76,11 +76,9 @@ typedef enum : NSUInteger {
     
     if (self.segmentedControl.selectedSegmentIndex == SegmentedControlValuesOnline) {
         [self.delegate userInOnlineMode:YES];
-        NSLog(@"online");
     }
     else if (self.segmentedControl.selectedSegmentIndex  == SegmentedControlValuesDevice) {
         [self.delegate userInOnlineMode:NO];
-        NSLog(@"device");
     }
 }
 
@@ -147,11 +145,9 @@ typedef enum : NSUInteger {
 
     if (sender.selectedSegmentIndex == SegmentedControlValuesOnline) {
         [self.delegate userInOnlineMode:YES];
-        NSLog(@"online");
     }
     else if (sender.selectedSegmentIndex == SegmentedControlValuesDevice) {
         [self.delegate userInOnlineMode:NO];
-        NSLog(@"device");
     }
 }
 

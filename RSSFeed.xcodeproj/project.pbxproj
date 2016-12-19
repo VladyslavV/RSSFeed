@@ -18,6 +18,7 @@
 		31162C7E1DF86C2C00AD1DAA /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31162C7D1DF86C2C00AD1DAA /* CustomTableViewCell.m */; };
 		31290F431E07EF500094D562 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31290F421E07EF500094D562 /* SplitViewController.m */; };
 		31290F481E07EFFF0094D562 /* SplitMasterTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31290F471E07EFFF0094D562 /* SplitMasterTVC.m */; };
+		31290F4C1E081AEB0094D562 /* WeatherVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31290F4B1E081AEB0094D562 /* WeatherVC.m */; };
 		312B7A321E057DD100684F41 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 312B7A311E057DD100684F41 /* Reachability.m */; };
 		312B7A351E057DF200684F41 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312B7A341E057DF200684F41 /* SystemConfiguration.framework */; };
 		31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31573FBE1DFAF81900882D43 /* FeedViewDetailVC.m */; };
@@ -60,6 +61,8 @@
 		31290F421E07EF500094D562 /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
 		31290F461E07EFFF0094D562 /* SplitMasterTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitMasterTVC.h; sourceTree = "<group>"; };
 		31290F471E07EFFF0094D562 /* SplitMasterTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitMasterTVC.m; sourceTree = "<group>"; };
+		31290F4A1E081AEB0094D562 /* WeatherVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherVC.h; sourceTree = "<group>"; };
+		31290F4B1E081AEB0094D562 /* WeatherVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherVC.m; sourceTree = "<group>"; };
 		312B7A301E057DD100684F41 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		312B7A311E057DD100684F41 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		312B7A341E057DF200684F41 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -156,10 +159,23 @@
 			isa = PBXGroup;
 			children = (
 				31290F441E07EF530094D562 /* Split VC */,
-				317AC1A51DF835CD001645FC /* Feed VC */,
-				31573FC01DFAF82700882D43 /* Feed Detail VC */,
+				31290F491E081A720094D562 /* BBC FEED Controllers */,
+				31290F4A1E081AEB0094D562 /* WeatherVC.h */,
+				31290F4B1E081AEB0094D562 /* WeatherVC.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		31290F491E081A720094D562 /* BBC FEED Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				317AC1A31DF835BD001645FC /* Fetcher */,
+				3115D59E1E03FFCA0046A484 /* Core Data */,
+				317AC1A51DF835CD001645FC /* Feed VC */,
+				31573FC01DFAF82700882D43 /* Feed Detail VC */,
+				317AC1A41DF835C4001645FC /* Model */,
+			);
+			name = "BBC FEED Controllers";
 			sourceTree = "<group>";
 		};
 		312B7A331E057DD500684F41 /* Reachability */ = {
@@ -254,9 +270,6 @@
 				3100BED01E0145D0006DBE6D /* Singletons */,
 				31573FC71DFE9D8000882D43 /* Categories */,
 				31290F451E07EF670094D562 /* View Controllers */,
-				317AC1A31DF835BD001645FC /* Fetcher */,
-				317AC1A41DF835C4001645FC /* Model */,
-				3115D59E1E03FFCA0046A484 /* Core Data */,
 				31DCD2571DF6BA9C003601C8 /* Supporting Files */,
 			);
 			path = RSSFeed;
@@ -426,6 +439,7 @@
 				31162C7E1DF86C2C00AD1DAA /* CustomTableViewCell.m in Sources */,
 				31DCD2701DF6F0C2003601C8 /* Fetcher.m in Sources */,
 				3100BECC1E013D9F006DBE6D /* ImageViewerVCMainView.m in Sources */,
+				31290F4C1E081AEB0094D562 /* WeatherVC.m in Sources */,
 				31DCD25C1DF6BA9C003601C8 /* AppDelegate.m in Sources */,
 				31573FC61DFE9D6E00882D43 /* UITraitCollection+MKAdditions.m in Sources */,
 				31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */,

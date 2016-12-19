@@ -13,6 +13,5 @@
 @interface FeedViewController : UIViewController <FeedViewModelDelegate, FeedViewDelegate>
 
 
-
 @end
 

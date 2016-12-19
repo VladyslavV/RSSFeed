@@ -8,6 +8,7 @@
 
 #import "SplitMasterTVC.h"
 #import "FeedViewController.h"
+#import "WeatherVC.h"
 
 @interface SplitMasterTVC ()
 
@@ -17,6 +18,9 @@
 
 NSArray* controllersArray;
 
+NSString* rssController = @"BBC feed";
+NSString* weatherController = @"Weather Info";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -25,14 +29,9 @@ NSArray* controllersArray;
     self.tableView.dataSource = self;
     self.splitViewController.delegate = self;
     self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    
-    NSString*feedViewControllerString = NSStringFromClass([FeedViewController class]);
-    controllersArray = @[feedViewControllerString];
-    
-    self.view.backgroundColor = [UIColor redColor];
-
+    controllersArray = @[rssController, weatherController];
 }
 
 #pragma mark - Table View Delegate
@@ -48,30 +47,19 @@ NSArray* controllersArray;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"%@", controllersArray[indexPath.row]);
-    
     [self createControllerWithTitle:controllersArray[indexPath.row]];
 }
 
 -(void) createControllerWithTitle:(NSString*) title {
-    NSString* vc = NSStringFromClass([FeedViewController class]);
-   
-    if ([title isEqualToString:vc]) {
-        
-        
-        
-        FeedViewController* cc = [FeedViewController new];
-        UINavigationController *detailNav = [[UINavigationController alloc] initWithRootViewController:cc];
-        detailNav.navigationItem.leftBarButtonItem = [self.splitViewController displayModeButtonItem];
-        
-        [self.splitViewController showDetailViewController:detailNav sender:self];
-       // [self presentViewController:detailNav animated:YES completion:nil];
-        
+    if ([title isEqualToString:rssController]) {
+        FeedViewController* feedViewController = [FeedViewController new];
+        [self.splitViewController showDetailViewController:feedViewController sender:self];
     }
-    
+    else if ([title isEqualToString:weatherController]) {
+        WeatherVC* weatherVC = [WeatherVC new];
+        [self.splitViewController showDetailViewController:weatherVC sender:self];
+    }
 }
-
 
 #pragma mark - Split View Controller Delegate
 

@@ -79,6 +79,10 @@
     [self.feedViewModel loadModelFromWeb];
     self.navigationItem.title = NSLocalizedString(@"navigationbar.main.title", nil);
     
+    [self internet];
+}
+
+-(void) internet {
     Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
     
     reach.reachableBlock = ^(Reachability*reach)
@@ -99,6 +103,7 @@
     
     [reach startNotifier];
 }
+
 
 
 -(void) viewDidAppear:(BOOL)animated {

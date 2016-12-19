@@ -47,13 +47,6 @@ static NSString* dataURl = @"http://feeds.bbci.co.uk/news/rss.xml?edition=int";
     self.filteredNews = nil;
     [self.fetcher fetchDataWithStringURL:dataURl];
 
-    //    NSLog(@"%d", self.loadFromCoreData);
-    //    if (self.loadFromCoreData) {
-    //        [self loadDataFromCoreData];
-    //    }
-    //    else {
-    //        [self.fetcher fetchDataWithStringURL:dataURl];
-    //    }
 }
 
 

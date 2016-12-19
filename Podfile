@@ -7,4 +7,7 @@ target 'RSSFeed' do
 
   # Pods for RSSFeed
   pod 'Masonry'
+  pod 'AFNetworking', '~> 3.0'
+  pod 'Mantle'
+
 end

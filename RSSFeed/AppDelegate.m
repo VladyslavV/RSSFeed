@@ -25,30 +25,23 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window makeKeyAndVisible];
-//
-//    UINavigationController *navigationController = [[UINavigationController alloc]
-//                                                    initWithRootViewController:[FeedViewController new]];
-//    
-//    [self.window setRootViewController:navigationController];
     
     SplitViewController* splitViewController = [[SplitViewController alloc] init];
     
     SplitMasterTVC *root = [[SplitMasterTVC alloc] init];
-    FeedViewController *detail = [[FeedViewController alloc] init];
     
     UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:root];
     
-    UINavigationController *detailNav = [[UINavigationController alloc] initWithRootViewController:detail];
+    // FeedViewController *detail = [[FeedViewController alloc] init];
+    // UINavigationController *detailNav = [[UINavigationController alloc] initWithRootViewController:detail];
+    // splitViewController.viewControllers = [NSArray arrayWithObjects:rootNav, detailNav, nil];
     
-    splitViewController.viewControllers = [NSArray arrayWithObjects:rootNav, detailNav, nil];
-    //navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
-    //splitViewController.delegate = detail;
+    splitViewController.viewControllers = @[rootNav];
     
     [self.window setRootViewController:splitViewController];
-
     
-   // [window addSubview:splitViewController.view];
-
+    
+    
     return YES;
 }
 
