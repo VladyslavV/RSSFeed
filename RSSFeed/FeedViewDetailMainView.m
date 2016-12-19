@@ -140,7 +140,7 @@ static void * XXContext = &XXContext;
         _newsDescriptionLabel = [UILabel new];
         _newsDescriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
         _newsDescriptionLabel.numberOfLines = 0;
-        UIFont* font = [UIFont systemFontOfSize:22];
+        UIFont* font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22];
         [_newsDescriptionLabel setFont:font];
         [_newsDescriptionLabel sizeToFit];
         _newsDescriptionLabel.minimumScaleFactor = 12.0 / font.pointSize;

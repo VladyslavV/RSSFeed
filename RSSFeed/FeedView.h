@@ -12,7 +12,7 @@
 @protocol FeedViewDelegate <NSObject>
 
 -(void) cellAtRowWasSelected:(NSInteger)cell;
-
+-(void) userInOnlineMode:(BOOL) onlineMode;
 
 @end
 

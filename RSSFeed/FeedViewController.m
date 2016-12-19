@@ -8,7 +8,7 @@
 
 #import "FeedViewController.h"
 #import "FeedViewDetailVC.h"
-
+#import "Reachability.h"
 
 @interface FeedViewController ()
 //UI
@@ -17,11 +17,21 @@
 //ViewModel
 @property (strong, nonatomic) FeedViewModel* feedViewModel;
 
+
 @end
 
 @implementation FeedViewController
 
 #pragma mark - FeedView Delegate
+
+-(void)userInOnlineMode:(BOOL) onlineMode {
+    if (onlineMode) {
+        [self.feedViewModel loadModelFromWeb];
+    }
+    else {
+        [self.feedViewModel loadModelFromCoreData];
+    }
+}
 
 -(void) cellAtRowWasSelected:(NSInteger)cell {
     FeedDetailViewModel* model = [self.feedViewModel createFeedDetailViewModelForCell:cell];
@@ -32,6 +42,10 @@
 #pragma mark - FeedViewModel Delegate
 
 -(void) modelWasUpdated {
+    [self.feedView updateView];
+}
+
+-(void) modelFailedToUpdate {
     [self.feedView updateView];
 }
 
@@ -49,6 +63,8 @@
 
 -(FeedViewModel*) feedViewModel {
     if (_feedViewModel == nil) {
+        
+#warning - Core Data
         _feedViewModel = [FeedViewModel new];
         _feedViewModel.delegate = self;
     }
@@ -60,8 +76,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.feedView];
-    [self.feedViewModel updateModel];
+    [self.feedViewModel loadModelFromWeb];
     self.navigationItem.title = NSLocalizedString(@"navigationbar.main.title", nil);
+    
+    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    
+    reach.reachableBlock = ^(Reachability*reach)
+    {
+        // keep in mind this is called on a background thread
+        // and if you are updating the UI it needs to happen
+        // on the main thread, like this:
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"REACHABLE!");
+        });
+    };
+    
+    reach.unreachableBlock = ^(Reachability*reach)
+    {
+        NSLog(@"UNREACHABLE!");
+    };
+    
+    [reach startNotifier];
+}
+
+
+-(void) viewDidAppear:(BOOL)animated {
+    [self.feedView updateView];
 }
 
 @end

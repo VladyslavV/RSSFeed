@@ -51,7 +51,7 @@
         _scrollView.minimumZoomScale = 1.0;
         _scrollView.maximumZoomScale = 3.0;
         _scrollView.userInteractionEnabled = YES;
-        _scrollView.contentMode = UIViewContentModeScaleToFill;
+        _scrollView.contentMode = UIViewContentModeScaleAspectFit;
         _scrollView.backgroundColor = [UIColor lightGrayColor];
     }
     return _scrollView;
@@ -62,7 +62,7 @@
         _myImageView = [UIImageView new];
         _myImageView.translatesAutoresizingMaskIntoConstraints = NO;
         _myImageView.userInteractionEnabled = YES;
-        _myImageView.contentMode = UIViewContentModeScaleToFill;
+       // _myImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _myImageView;
 }

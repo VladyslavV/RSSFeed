@@ -12,6 +12,8 @@
 @protocol FetcherDelegate <NSObject>
 
 -(void) allNewsParsed:(AllNews*) allNews;
+-(void) failFetching;
+
 
 @end
 
@@ -21,6 +23,6 @@
 
 
 //fetch data
--(void) fetchData;
+-(void) fetchDataWithStringURL:(NSString*) stringURL;
 
 @end

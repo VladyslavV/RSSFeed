@@ -8,22 +8,54 @@
 
 #import "FeedView.h"
 #import "Masonry.h"
-#import <objc/message.h>
+
+typedef enum : NSUInteger {
+    SegmentedControlValuesOnline,
+    SegmentedControlValuesDevice
+} SegmentedControlValues;
 
 @interface FeedView () <UITableViewDelegate, UITableViewDataSource, UITraitEnvironment, UISearchBarDelegate>
 
-@property (nonatomic, strong) UITableView* tableView;
+@property (strong, nonatomic) UIView* tableHeaderView;
+@property (strong, nonatomic) UITableView* tableView;
 @property (strong, nonatomic) UISearchBar* searchBar;
+@property (strong, nonatomic) UISegmentedControl* segmentedControl;
+
 @end
 
 @implementation FeedView
+
+
+// header that holds segment control and search bar
+-(UIView*) tableHeaderView {
+    if (_tableHeaderView == nil) {
+        _tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
+        _tableHeaderView.translatesAutoresizingMaskIntoConstraints = NO;
+        _tableHeaderView.backgroundColor = [UIColor whiteColor];
+        [_tableHeaderView addSubview:self.segmentedControl];
+        [_tableHeaderView addSubview:self.searchBar];
+    }
+    return _tableHeaderView;
+}
+
+-(UISegmentedControl*) segmentedControl {
+    if (_segmentedControl == nil) {
+        _segmentedControl = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Online",@"Device",nil]];
+        _segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
+        [_segmentedControl setSelectedSegmentIndex:0];
+        [_segmentedControl addTarget:self
+                              action:@selector(segmentControlChanged:)
+                    forControlEvents:UIControlEventValueChanged];
+       // [_segmentedControl setTintColor:[UIColor blueColor]];
+    }
+    return _segmentedControl;
+}
 
 -(UISearchBar*) searchBar {
     if (_searchBar == nil) {
         _searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
         _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
         _searchBar.delegate = self;
-        self.tableView.tableHeaderView = _searchBar;
     }
     return _searchBar;
 }
@@ -39,8 +71,17 @@
 }
 
 -(void) updateModel {
+    
     self.searchBar.text = @"";
-    [self.feedViewModel updateModel];
+    
+    if (self.segmentedControl.selectedSegmentIndex == SegmentedControlValuesOnline) {
+        [self.delegate userInOnlineMode:YES];
+        NSLog(@"online");
+    }
+    else if (self.segmentedControl.selectedSegmentIndex  == SegmentedControlValuesDevice) {
+        [self.delegate userInOnlineMode:NO];
+        NSLog(@"device");
+    }
 }
 
 -(UITableView*) tableView {
@@ -52,8 +93,9 @@
         _tableView.rowHeight = UITableViewAutomaticDimension;
         
         [self addSubview:_tableView];
+        [_tableView addSubview:self.tableHeaderView];
+        _tableView.tableHeaderView = self.tableHeaderView;
         [_tableView addSubview:self.refrechControl];
-        [self addSubview:self.searchBar];
     }
     return _tableView;
 }
@@ -64,23 +106,53 @@
     [self.refrechControl endRefreshing];
 }
 
+
 #pragma mark - Trait Collection Delegate Methods
 
 -(void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.tableHeaderView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tableView.mas_top).with.offset(2);
         make.leading.trailing.equalTo(self);
+    }];
+    
+    [self.segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tableHeaderView.mas_top);
+        make.leading.trailing.equalTo(self.tableHeaderView);
+    }];
+    
+    [self.searchBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.segmentedControl.mas_bottom).with.offset(2);
+        make.bottom.equalTo(self.tableHeaderView.mas_bottom).with.offset(-2);
+        make.leading.trailing.equalTo(self.tableHeaderView);
     }];
     
     [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.leading.trailing.equalTo(self);
-        make.top.equalTo(self.mas_top).with.offset(0);
+        make.top.equalTo(self.mas_top);
     }];
     
     [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.superview);
+        make.top.equalTo(self.superview);
+        make.trailing.leading.bottom.equalTo(self.superview);
     }];
+    
+}
+
+#pragma mark - Segment Control
+
+-(void) segmentControlChanged:(UISegmentedControl*) sender {
+    self.searchBar.text = @"";
+
+    if (sender.selectedSegmentIndex == SegmentedControlValuesOnline) {
+        [self.delegate userInOnlineMode:YES];
+        NSLog(@"online");
+    }
+    else if (sender.selectedSegmentIndex == SegmentedControlValuesDevice) {
+        [self.delegate userInOnlineMode:NO];
+        NSLog(@"device");
+    }
 }
 
 #pragma mark - Search Bar Delegate Methods

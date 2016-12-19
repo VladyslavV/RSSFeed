@@ -27,7 +27,6 @@
 
 
 BOOL startWritingData = NO;
-static NSString* dataURl = @"http://feeds.bbci.co.uk/news/rss.xml?edition=int";
 NSMutableString* currentNodeContent;
 
 
@@ -63,22 +62,31 @@ NSMutableString* currentNodeContent;
 
 #pragma mark - Fetch Methods
 
--(void) fetchData
+-(void) fetchDataWithStringURL:(NSString*) stringURL
 {
-    [self getResponse:dataURl success:^(NSXMLParser *responseXML) {
+    self.allNews = nil;
+    [self getResponse:stringURL success:^(NSXMLParser *responseXML) {
         responseXML.delegate = self;
         [responseXML parse];
+    } error:^(BOOL error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate failFetching];
+        });
     }];
 }
 
--(void)getResponse:(NSString *)urlStr success:(void (^)(NSXMLParser *responseXML))success
+-(void)getResponse:(NSString *)urlStr success:(void (^)(NSXMLParser *responseXML))success error: (void (^) (BOOL error)) fail
 {
     NSURLSession *session = [NSURLSession sharedSession];
     NSURL *url = [NSURL URLWithString:urlStr];
     
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                {
+
+                                                if (error) {
+                                                    fail(YES);
+                                                }
+                                                else {
                                                     NSXMLParser * xml = [[NSXMLParser alloc] initWithData:data];
                                                     success(xml);
                                                 }
@@ -96,7 +104,7 @@ NSMutableString* currentNodeContent;
 }
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
- 
+    
     if ([elementName isEqualToString:@"item"]) {
         // pass dict with one news item
         if (startWritingData && self.reusableNewsItemDictionary.count != 0) {

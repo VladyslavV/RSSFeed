@@ -11,6 +11,8 @@
 #import "CustomTableViewCell.h"
 #import "NewsItemCD+CoreDataClass.h"
 #import "AppDelegate.h"
+#import "Reachability.h"
+
 
 @interface FeedViewModel() <FetcherDelegate>
 
@@ -18,11 +20,15 @@
 @property (strong, nonatomic) AllNews* allNews;
 @property (strong, nonatomic) NSArray* filteredNews;
 
+
 @end
 
 @implementation FeedViewModel
 
-BOOL loadFromCoreData = YES;
+BOOL loadFromCoreData;
+
+static NSString* dataURl = @"http://feeds.bbci.co.uk/news/rss.xml?edition=int";
+
 
 -(Fetcher*) fetcher {
     if (_fetcher == nil) {
@@ -35,19 +41,24 @@ BOOL loadFromCoreData = YES;
 
 #pragma mark - Chose where to load data from
 
--(void) updateModel {
-    if (loadFromCoreData) {
-        [self loadDataFromCoreData];
-    }
-    else {
-        self.filteredNews = self.allNews.data;
-        [self.allNews  clearData];
-        [self.fetcher fetchData];
-    }
+-(void) loadModelFromWeb {
+
+    self.allNews = nil;
+    self.filteredNews = nil;
+    [self.fetcher fetchDataWithStringURL:dataURl];
+
+    //    NSLog(@"%d", self.loadFromCoreData);
+    //    if (self.loadFromCoreData) {
+    //        [self loadDataFromCoreData];
+    //    }
+    //    else {
+    //        [self.fetcher fetchDataWithStringURL:dataURl];
+    //    }
 }
 
+
 -(NSString*) searchBarPlaceholder {
-    return [NSString localizedStringWithFormat:NSLocalizedString(@"%d.item(s)", nil), self.filteredNews.count];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"%d.item(s)", nil), self.filteredNews ? self.filteredNews.count : 0];
 }
 
 #pragma mark - Fetcher Delegate
@@ -59,7 +70,13 @@ BOOL loadFromCoreData = YES;
     [self writeToCoreData];
 }
 
-#pragma mark - Core Data 
+-(void)failFetching {
+    self.allNews = nil;
+    self.filteredNews = nil;
+    [self.delegate modelWasUpdated];
+}
+
+#pragma mark - Core Data
 
 -(void) writeToCoreData {
     [self cleanCoreData];
@@ -75,20 +92,19 @@ BOOL loadFromCoreData = YES;
     [MOC save:nil];
 }
 
--(void) loadDataFromCoreData {
+-(void) loadModelFromCoreData {
     NSSortDescriptor* sortByIndex = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES selector:@selector(localizedStandardCompare:)];
     NSArray* coreData = [NewsItemCD getObjectsArrayWithPredicate:nil propertyToFetchArray:nil sortDescriptorArray:@[sortByIndex]];
     NSLog(@"%lu", (unsigned long)coreData.count);
     self.allNews = [[AllNews alloc] init];
     self.allNews.data = [coreData mutableCopy];
-    self.filteredNews =  self.allNews.data;
+    self.filteredNews = self.allNews.data;
     [self.delegate modelWasUpdated];
 }
 
 -(void) cleanCoreData {
     [NewsItemCD cleanAll];
 }
-
 
 #pragma mark - Table View
 
