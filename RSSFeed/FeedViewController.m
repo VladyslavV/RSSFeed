@@ -78,31 +78,8 @@
     [self.view addSubview:self.feedView];
     [self.feedViewModel loadModelFromWeb];
     self.navigationItem.title = NSLocalizedString(@"navigationbar.main.title", nil);
-    
-    [self internet];
 }
 
--(void) internet {
-    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-    
-    reach.reachableBlock = ^(Reachability*reach)
-    {
-        // keep in mind this is called on a background thread
-        // and if you are updating the UI it needs to happen
-        // on the main thread, like this:
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"REACHABLE!");
-        });
-    };
-    
-    reach.unreachableBlock = ^(Reachability*reach)
-    {
-        NSLog(@"UNREACHABLE!");
-    };
-    
-    [reach startNotifier];
-}
 
 
 

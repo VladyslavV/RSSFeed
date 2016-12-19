@@ -74,7 +74,6 @@ static NSString* dataURl = @"http://feeds.bbci.co.uk/news/rss.xml?edition=int";
 -(void) writeToCoreData {
     [self cleanCoreData];
     // pass all news dictionaries to fill core data
-    NSLog(@"%lu", (unsigned long)self.allNews.data.count);
     for (int i = 0; i < self.allNews.data.count; i++) {
         NewsItem* newsItem = self.allNews.data[i];
         NSDictionary* dict = newsItem.dict;
@@ -88,7 +87,6 @@ static NSString* dataURl = @"http://feeds.bbci.co.uk/news/rss.xml?edition=int";
 -(void) loadModelFromCoreData {
     NSSortDescriptor* sortByIndex = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES selector:@selector(localizedStandardCompare:)];
     NSArray* coreData = [NewsItemCD getObjectsArrayWithPredicate:nil propertyToFetchArray:nil sortDescriptorArray:@[sortByIndex]];
-    NSLog(@"%lu", (unsigned long)coreData.count);
     self.allNews = [[AllNews alloc] init];
     self.allNews.data = [coreData mutableCopy];
     self.filteredNews = self.allNews.data;

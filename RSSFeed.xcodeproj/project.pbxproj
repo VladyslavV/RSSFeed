@@ -160,8 +160,7 @@
 			children = (
 				31290F441E07EF530094D562 /* Split VC */,
 				31290F491E081A720094D562 /* BBC FEED Controllers */,
-				31290F4A1E081AEB0094D562 /* WeatherVC.h */,
-				31290F4B1E081AEB0094D562 /* WeatherVC.m */,
+				31290F541E0821E50094D562 /* Weather Controller */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -176,6 +175,15 @@
 				317AC1A41DF835C4001645FC /* Model */,
 			);
 			name = "BBC FEED Controllers";
+			sourceTree = "<group>";
+		};
+		31290F541E0821E50094D562 /* Weather Controller */ = {
+			isa = PBXGroup;
+			children = (
+				31290F4A1E081AEB0094D562 /* WeatherVC.h */,
+				31290F4B1E081AEB0094D562 /* WeatherVC.m */,
+			);
+			name = "Weather Controller";
 			sourceTree = "<group>";
 		};
 		312B7A331E057DD500684F41 /* Reachability */ = {
