@@ -1,14 +1,14 @@
 //
-//  WeatherVC.h
+//  WeatherMainView.m
 //  RSSFeed
 //
 //  Created by Vladysalv Vyshnevksyy on 12/19/16.
 //  Copyright © 2016 Vladysalv Vyshnevksyy. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WeatherMainView.h"
 
+@implementation WeatherMainView
 
-@interface WeatherVC : UIViewController
 
 @end

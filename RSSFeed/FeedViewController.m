@@ -49,7 +49,7 @@
     [self.feedView updateView];
 }
 
-#pragma mark - Init Variables
+#pragma mark - Create
 
 -(FeedView*) feedView {
     if (_feedView == nil) {
@@ -63,8 +63,6 @@
 
 -(FeedViewModel*) feedViewModel {
     if (_feedViewModel == nil) {
-        
-#warning - Core Data
         _feedViewModel = [FeedViewModel new];
         _feedViewModel.delegate = self;
     }
@@ -79,8 +77,6 @@
     [self.feedViewModel loadModelFromWeb];
     self.navigationItem.title = NSLocalizedString(@"navigationbar.main.title", nil);
 }
-
-
 
 
 -(void) viewDidAppear:(BOOL)animated {

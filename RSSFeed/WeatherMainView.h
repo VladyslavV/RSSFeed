@@ -1,5 +1,5 @@
 //
-//  WeatherVC.h
+//  WeatherMainView.h
 //  RSSFeed
 //
 //  Created by Vladysalv Vyshnevksyy on 12/19/16.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface WeatherVC : UIViewController
+@interface WeatherMainView : UIView
 
 @end
