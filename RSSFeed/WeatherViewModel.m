@@ -20,7 +20,7 @@
 
 @implementation WeatherViewModel
 
-NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=6942553,2147714,5128581,524901,703448,2643743&units=metric&appid=4024a343a62743770c16424ec74479c6";
+NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6942553,2147714,5128581,524901,703448,2643743&units=metric&appid=4024a343a62743770c16424ec74479c6";
 
 -(void)setModel:(Cities *)model {
     _model = model;
@@ -37,6 +37,8 @@ NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=6942553,
 -(void) loadWeatherFromWeb {
     [self.fetcher fetchWetherWithStringURL:stringURL completion:^(Cities *model) {
         self.model = model;
+    } failed:^ {
+        self.model = nil;
     }];
 }
 

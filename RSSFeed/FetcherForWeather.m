@@ -12,14 +12,23 @@
 #import "City.h"
 #import "Cities.h"
 
+@interface FetcherForWeather()
+
+@property (strong, nonatomic) AFHTTPSessionManager* manager;
+
+@end
+
 @implementation FetcherForWeather
 
+-(AFHTTPSessionManager*) manager {
+    if (!_manager) {
+        _manager = [AFHTTPSessionManager manager];
+    }
+    return _manager;
+}
 
--(void) fetchWetherWithStringURL:(NSString*) stringURL completion:(void (^) (Cities* model) ) callBack {
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    [manager GET:stringURL
+-(void) fetchWetherWithStringURL:(NSString*) stringURL completion:(void (^) (Cities* model)) callBack failed:(void (^) (void)) failed {
+    [self.manager GET:stringURL
       parameters:nil
         progress:nil
          success:^(NSURLSessionTask *task, id responseObject) {
@@ -33,9 +42,16 @@
              });
              
          } failure:^(NSURLSessionTask *operation, NSError *error) {
-             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 failed();
+             });
              NSLog(@"Error: %@", error);
          }];
+}
+
+-(void) cancelDownloading {
+    [self.manager invalidateSessionCancelingTasks:YES];
+
 }
 
 @end

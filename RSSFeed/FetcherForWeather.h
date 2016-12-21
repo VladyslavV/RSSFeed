@@ -11,6 +11,9 @@
 
 @interface FetcherForWeather : NSObject
 
--(void) fetchWetherWithStringURL:(NSString*) stringURL completion:(void (^) (Cities* model) ) callBack;
+-(void) fetchWetherWithStringURL:(NSString*) stringURL completion:(void (^) (Cities* model)) callBack failed:(void (^) (void)) failed;
+
+-(void) cancelDownloading;
+
 
 @end

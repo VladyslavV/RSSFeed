@@ -45,6 +45,9 @@
     [super viewDidLoad];
     [self.view addSubview:self.mainView];
     [self.viewModel loadWeatherFromWeb];
+    
+    self.navigationItem.backBarButtonItem.title = @"f";
+    
 }
 
 #pragma mark - View Model Delegate

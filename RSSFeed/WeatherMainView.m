@@ -55,9 +55,7 @@
 
 -(void) layoutSubviews {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-    CGSize size= self.frame.size;
-    [SVProgressHUD setOffsetFromCenter:UIOffsetMake(0, 100)];
-    [SVProgressHUD setMinimumSize:size];
+    [SVProgressHUD setMinimumSize:self.frame.size];
     [SVProgressHUD show];
     
     
