@@ -11,7 +11,7 @@
 #import "WeatherMainView.h"
 #import "WeatherViewModel.h"
 
-@interface WeatherVC ()
+@interface WeatherVC () <WeatherViewModelDelegate>
 
 @property (strong, nonatomic) WeatherMainView* mainView;
 
@@ -27,6 +27,7 @@
     if (!_mainView) {
         _mainView = [WeatherMainView new];
         _mainView.translatesAutoresizingMaskIntoConstraints = NO;
+        _mainView.viewModel = self.viewModel;
     }
     return _mainView;
 }
@@ -34,6 +35,7 @@
 -(WeatherViewModel*) viewModel {
     if (!_viewModel) {
         _viewModel = [WeatherViewModel new];
+        _viewModel.delegate = self;
     }
     return _viewModel;
 }
@@ -41,13 +43,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //[self.view addSubview:self.mainView];
-    
+    [self.view addSubview:self.mainView];
     [self.viewModel loadWeatherFromWeb];
-    
-    self.view.backgroundColor = [UIColor yellowColor];
+}
+
+#pragma mark - View Model Delegate
+
+-(void)modelWasUpdated {
+    [self.mainView updateView];
 }
 
 

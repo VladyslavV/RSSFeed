@@ -135,7 +135,6 @@ typedef enum : NSUInteger {
         make.top.equalTo(self.superview);
         make.trailing.leading.bottom.equalTo(self.superview);
     }];
-    
 }
 
 #pragma mark - Segment Control
@@ -174,8 +173,7 @@ typedef enum : NSUInteger {
     [self.searchBar resignFirstResponder];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
-{
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
     [self updateModel];
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];

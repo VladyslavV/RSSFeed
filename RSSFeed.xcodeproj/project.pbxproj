@@ -31,6 +31,9 @@
 		31B609991E083B51007EB487 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B609981E083B51007EB487 /* City.m */; };
 		31B609A01E0937EB007EB487 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6099F1E0937EB007EB487 /* Weather.m */; };
 		31B609A61E09789B007EB487 /* Cities.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B609A51E09789B007EB487 /* Cities.m */; };
+		31B609AB1E09864D007EB487 /* WeatherTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31B609AA1E09864D007EB487 /* WeatherTVC.xib */; };
+		31B609AF1E098AF8007EB487 /* WeatherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B609AD1E098AF8007EB487 /* WeatherCell.m */; };
+		31B609B01E098AF8007EB487 /* WeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31B609AE1E098AF8007EB487 /* WeatherCell.xib */; };
 		31C22C0B1DFFF234003453E9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31C22C0D1DFFF234003453E9 /* Localizable.strings */; };
 		31C22C111DFFFF23003453E9 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 31C22C131DFFFF23003453E9 /* Localizable.stringsdict */; };
 		31D1D3001DF9738F00A3D615 /* FeedViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D1D2FF1DF9738F00A3D615 /* FeedViewModel.m */; };
@@ -92,6 +95,10 @@
 		31B6099F1E0937EB007EB487 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
 		31B609A41E09789B007EB487 /* Cities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cities.h; sourceTree = "<group>"; };
 		31B609A51E09789B007EB487 /* Cities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cities.m; sourceTree = "<group>"; };
+		31B609AA1E09864D007EB487 /* WeatherTVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherTVC.xib; sourceTree = "<group>"; };
+		31B609AC1E098AF8007EB487 /* WeatherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherCell.h; sourceTree = "<group>"; };
+		31B609AD1E098AF8007EB487 /* WeatherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherCell.m; sourceTree = "<group>"; };
+		31B609AE1E098AF8007EB487 /* WeatherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeatherCell.xib; sourceTree = "<group>"; };
 		31C22C0C1DFFF234003453E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		31C22C0E1DFFF243003453E9 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		31C22C121DFFFF23003453E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -178,7 +185,7 @@
 			children = (
 				31290F441E07EF530094D562 /* Split VC */,
 				31290F491E081A720094D562 /* BBC FEED Controllers */,
-				31290F541E0821E50094D562 /* Weather Controller */,
+				31290F541E0821E50094D562 /* Open Weather Map Controller */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -195,9 +202,11 @@
 			name = "BBC FEED Controllers";
 			sourceTree = "<group>";
 		};
-		31290F541E0821E50094D562 /* Weather Controller */ = {
+		31290F541E0821E50094D562 /* Open Weather Map Controller */ = {
 			isa = PBXGroup;
 			children = (
+				31B609B11E098B04007EB487 /* Custom Views */,
+				31B609A91E098595007EB487 /* Xibs */,
 				31290F4A1E081AEB0094D562 /* WeatherVC.h */,
 				31290F4B1E081AEB0094D562 /* WeatherVC.m */,
 				31290F591E08232E0094D562 /* WeatherMainView.h */,
@@ -207,7 +216,7 @@
 				31290F581E08227B0094D562 /* Fetcher */,
 				31B6099A1E083B5B007EB487 /* Mantle Model */,
 			);
-			name = "Weather Controller";
+			name = "Open Weather Map Controller";
 			sourceTree = "<group>";
 		};
 		31290F581E08227B0094D562 /* Fetcher */ = {
@@ -297,6 +306,24 @@
 				31B6099F1E0937EB007EB487 /* Weather.m */,
 			);
 			name = "Mantle Model";
+			sourceTree = "<group>";
+		};
+		31B609A91E098595007EB487 /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				31B609AA1E09864D007EB487 /* WeatherTVC.xib */,
+				31B609AE1E098AF8007EB487 /* WeatherCell.xib */,
+			);
+			name = Xibs;
+			sourceTree = "<group>";
+		};
+		31B609B11E098B04007EB487 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				31B609AC1E098AF8007EB487 /* WeatherCell.h */,
+				31B609AD1E098AF8007EB487 /* WeatherCell.m */,
+			);
+			name = "Custom Views";
 			sourceTree = "<group>";
 		};
 		31DCD24B1DF6BA9C003601C8 = {
@@ -425,9 +452,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31B609AB1E09864D007EB487 /* WeatherTVC.xib in Resources */,
 				31DCD2641DF6BA9C003601C8 /* Assets.xcassets in Resources */,
 				31C22C0B1DFFF234003453E9 /* Localizable.strings in Resources */,
 				31C22C111DFFFF23003453E9 /* Localizable.stringsdict in Resources */,
+				31B609B01E098AF8007EB487 /* WeatherCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +516,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				31573FBF1DFAF81900882D43 /* FeedViewDetailVC.m in Sources */,
+				31B609AF1E098AF8007EB487 /* WeatherCell.m in Sources */,
 				31162C7A1DF8527A00AD1DAA /* FeedView.m in Sources */,
 				3100BEC91E013D22006DBE6D /* ImageViewerVC.m in Sources */,
 				31DCD25F1DF6BA9C003601C8 /* FeedViewController.m in Sources */,

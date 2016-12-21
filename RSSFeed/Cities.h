@@ -13,7 +13,6 @@
 
 @interface Cities : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic) int numberOfCitites;
 @property (nonatomic) NSArray* array;
 
 

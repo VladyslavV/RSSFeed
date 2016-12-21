@@ -7,8 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface WeatherViewModel : NSObject
+
+@protocol WeatherViewModelDelegate <NSObject>
+
+-(void) modelWasUpdated;
+
+@end
+
+
+@interface WeatherViewModel : NSObject <UITableViewDataSource, UITableViewDelegate>
+
+
+@property (nonatomic, weak) id <WeatherViewModelDelegate> delegate;
+
+
 
 -(void) loadWeatherFromWeb;
 

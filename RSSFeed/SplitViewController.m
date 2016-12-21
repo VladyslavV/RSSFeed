@@ -7,6 +7,7 @@
 //
 
 #import "SplitViewController.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface SplitViewController ()
 

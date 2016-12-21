@@ -40,8 +40,6 @@
     
     [self.window setRootViewController:splitViewController];
     
-    
-    
     return YES;
 }
 

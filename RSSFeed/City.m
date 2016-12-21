@@ -18,6 +18,7 @@
              @"temperature": @"main.temp",
              @"humidity" : @"main.humidity",
              @"pressure" : @"main.pressure",
+             @"country" : @"sys.country"
              };
 }
 

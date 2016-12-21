@@ -14,6 +14,7 @@
 @interface City : MTLModel  <MTLJSONSerializing>
 
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *country;
 
 @property (strong, nonatomic) Weather* weather;
 

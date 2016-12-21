@@ -12,7 +12,6 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"numberOfCitites": @"cnt",
              @"array" : @"list"
              };
 }

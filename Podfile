@@ -9,5 +9,7 @@ target 'RSSFeed' do
   pod 'Masonry'
   pod 'AFNetworking', '~> 3.0'
   pod 'Mantle'
-
+  pod 'SVProgressHUD'
+  pod 'SDWebImage'
+  
 end

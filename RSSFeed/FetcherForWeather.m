@@ -27,14 +27,15 @@
              Cities* cities = [MTLJSONAdapter modelOfClass:[Cities class]
                                               fromJSONDictionary:responseObject
                                                       error:&error];
-             callBack(cities);
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 callBack(cities);
+             });
              
          } failure:^(NSURLSessionTask *operation, NSError *error) {
              
              NSLog(@"Error: %@", error);
          }];
-    
-    
 }
 
 @end

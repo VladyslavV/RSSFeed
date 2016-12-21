@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-@interface WeatherVC : UIViewController
+@interface WeatherVC : UIViewController 
 
 @end
