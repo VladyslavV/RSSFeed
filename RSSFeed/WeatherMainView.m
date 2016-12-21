@@ -54,8 +54,9 @@
 }
 
 -(void) layoutSubviews {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-    [SVProgressHUD setMinimumSize:self.frame.size];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
+    
+    [SVProgressHUD setMinimumSize:self.superview.frame.size];
     [SVProgressHUD show];
     
     
