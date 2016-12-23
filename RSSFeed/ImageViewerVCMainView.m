@@ -83,7 +83,7 @@
         
         //gestures
         [self.myImageView addGestureRecognizer:self.swipeToDismiss];
-        [self.myImageView addGestureRecognizer:self.tapToDismissController];
+        [self addGestureRecognizer:self.tapToDismissController];
         [self.scrollView addGestureRecognizer:self.tapToZoom];
     }];
 }

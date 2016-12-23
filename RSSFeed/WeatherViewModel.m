@@ -92,7 +92,7 @@ NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6
         DBCityRealm* city = self.realmCities[indexPath.row];
         
         NSString * stringURL = [NSString stringWithFormat:@"http://openweathermap.org/img/w/%@.png", city.icon];
-        [cell.weatherIconImageView setContentMode:UIViewContentModeScaleAspectFit];
+        //[cell.weatherIconImageView setContentMode:UIViewContentModeScaleAspectFit];
         cell.weatherIconImageView.image = nil;
         [cell.weatherIconImageView sd_setImageWithURL:[NSURL URLWithString:stringURL]placeholderImage:[UIImage imageNamed:@"weatherPlaceholder"]];
     }
