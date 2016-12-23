@@ -19,7 +19,6 @@
 @property (strong, nonatomic) UILabel* newsDescriptionLabel;
 @property (strong, nonatomic) UILabel* pubDateLabel;
 
-@property (strong, nonatomic) UIButton* shareSocialButton;
 
 @property (strong, nonatomic) UIVisualEffectView* blurView;
 
@@ -168,8 +167,7 @@ static void * XXContext = &XXContext;
         self.titleLabel.attributedText = [self getAttributedString:[self.feedDetailViewModel titleText]];
         self.newsDescriptionLabel.text = [self.feedDetailViewModel newsDescriptionText];
         self.pubDateLabel.text = [self.feedDetailViewModel pubDateText];
-        
-        
+
         [[ImageDownloader sharedObject] fetchImageWithUrl:self.feedDetailViewModel.imageURL andCallBack:^(NSData *imageData) {
             UIImage* image = [UIImage imageWithData:imageData];
             self.newsImageView.image = image;
@@ -336,9 +334,10 @@ static void * XXContext = &XXContext;
     }];
     
     [self.newsImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        [constraints addObject:make.centerX.equalTo(self.mas_centerX)];
         [constraints addObject:make.top.equalTo(self.titleLabel.mas_bottom).with.offset(10)];
         [constraints addObject:make.width.height.equalTo(self.mas_height).multipliedBy(0.4)];
-        [constraints addObject:make.leading.equalTo(self.mas_leading).with.offset(20)];
+       // [constraints addObject:make.leading.equalTo(self.mas_leading).with.offset(20)];
     }];
     
     [self.pubDateLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -348,10 +347,10 @@ static void * XXContext = &XXContext;
     }];
     
     [self.newsDescriptionLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        [constraints addObject:make.leading.equalTo(self.newsImageView.mas_trailing).with.offset(10)];
-        [constraints addObject:make.top.equalTo(self.newsImageView)];
-        [constraints addObject:make.trailing.equalTo(self.mas_trailing).with.offset(-20)];
-        [constraints addObject:make.bottom.lessThanOrEqualTo(self.pubDateLabel.mas_top).with.offset(-6)];
+        [constraints addObject:make.leading.equalTo(self.mas_leading).with.offset(10)];
+        [constraints addObject:make.top.equalTo(self.pubDateLabel.mas_bottom).with.offset(10)];
+        [constraints addObject:make.trailing.equalTo(self.mas_trailing).with.offset(-10)];
+        [constraints addObject:make.bottom.lessThanOrEqualTo(self.shareSocialButton.mas_top).with.offset(-6)];
     }];
     
     [self.shareSocialButton mas_remakeConstraints:^(MASConstraintMaker *make) {

@@ -20,6 +20,8 @@
 @property (strong, nonatomic) UIScrollView* scrollView;
 @property (strong, nonatomic) UITapGestureRecognizer* tapToZoom;
 @property (strong, nonatomic) UITapGestureRecognizer* tapToDismissController;
+@property (strong, nonatomic) UISwipeGestureRecognizer* swipeToDismiss;
+
 
 @property BOOL didSetConstraints;
 @property NSArray *iPadPortraitConstraints;
@@ -29,6 +31,15 @@
 @end
 
 @implementation ImageViewerVCMainView
+
+-(UISwipeGestureRecognizer*) swipeToDismiss {
+    if (_swipeToDismiss == nil) {
+        _swipeToDismiss = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+        _swipeToDismiss.direction = UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
+        _swipeToDismiss.delegate = self;
+    }
+    return _swipeToDismiss;
+}
 
 -(UITapGestureRecognizer*) tapToDismissController {
     if (_tapToDismissController == nil) {
@@ -61,8 +72,6 @@
 
 // called once (viewDidLoad)
 -(void) didMoveToSuperview {
-    
-    
     [self.viewModel prepareScrollView:^(UIScrollView *scrollView, UIImageView *imageView) {
         self.scrollView = scrollView;
         self.myImageView = imageView;
@@ -73,8 +82,9 @@
         [self.scrollView addSubview:self.myImageView];
         
         //gestures
+        [self.myImageView addGestureRecognizer:self.swipeToDismiss];
+        [self.myImageView addGestureRecognizer:self.tapToDismissController];
         [self.scrollView addGestureRecognizer:self.tapToZoom];
-        [self addGestureRecognizer:self.tapToDismissController];
     }];
 }
 
@@ -101,6 +111,11 @@
 }
 
 #pragma mark - Actions
+
+
+-(void) handleSwipe:(UISwipeGestureRecognizer*) swipe {
+    [self.delegate dismissViewController];
+}
 
 -(void) handleDoubleTap:(UITapGestureRecognizer*) tap {
     if (self.scrollView.zoomScale > 1) {
@@ -194,9 +209,12 @@
     NSMutableArray *constraints = [[NSMutableArray alloc] init];
     
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        [constraints addObject:make.width.equalTo(self.mas_width)];
-        [constraints addObject:make.center.equalTo(self)];
-        [constraints addObject:make.height.equalTo(self.mas_height).multipliedBy(0.5)];
+        [constraints addObject:make.edges.equalTo(self)];
+
+        
+//        [constraints addObject:make.width.equalTo(self.mas_width)];
+//        [constraints addObject:make.center.equalTo(self)];
+//        [constraints addObject:make.height.equalTo(self.mas_height).multipliedBy(0.5)];
     }];
     
     [self.myImageView mas_makeConstraints:^(MASConstraintMaker *make) {

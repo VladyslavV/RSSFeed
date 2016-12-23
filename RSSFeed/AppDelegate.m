@@ -11,7 +11,7 @@
 #import "SplitViewController.h"
 #import "SplitMasterTVC.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()  <UISplitViewControllerDelegate>
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 
@@ -36,6 +36,7 @@
     // UINavigationController *detailNav = [[UINavigationController alloc] initWithRootViewController:detail];
     // splitViewController.viewControllers = [NSArray arrayWithObjects:rootNav, detailNav, nil];
     
+   // splitViewController.delegate = self;
     splitViewController.viewControllers = @[rootNav];
     
     [self.window setRootViewController:splitViewController];

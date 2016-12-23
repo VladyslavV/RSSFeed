@@ -11,5 +11,6 @@ target 'RSSFeed' do
   pod 'Mantle'
   pod 'SVProgressHUD'
   pod 'SDWebImage'
+  pod 'Realm'
   
 end

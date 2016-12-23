@@ -25,6 +25,7 @@
 
 
 -(void) loadWeatherFromWeb;
+-(void) stopAllTasks;
 
 
 @end

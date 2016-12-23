@@ -14,5 +14,6 @@
 @property (strong, nonatomic) WeatherViewModel* viewModel;
 
 -(void) updateView;
+-(void) updateConstraints;
 
 @end

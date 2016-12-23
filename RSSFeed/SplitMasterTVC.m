@@ -10,7 +10,7 @@
 #import "FeedViewController.h"
 #import "WeatherVC.h"
 
-@interface SplitMasterTVC ()
+@interface SplitMasterTVC () 
 
 @end
 
@@ -51,13 +51,26 @@ NSString* weatherController = @"Weather Info";
 }
 
 -(void) createControllerWithTitle:(NSString*) title {
+
     if ([title isEqualToString:rssController]) {
         FeedViewController* feedViewController = [FeedViewController new];
-        [self.splitViewController showDetailViewController:feedViewController sender:self];
+        if (self.splitViewController.isCollapsed) {
+            [self.splitViewController showDetailViewController:feedViewController sender:self];
+        }
+        else {
+            UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:feedViewController];
+            [self.splitViewController showDetailViewController:nav sender:self];
+        }
     }
     else if ([title isEqualToString:weatherController]) {
         WeatherVC* weatherVC = [WeatherVC new];
-        [self.splitViewController showDetailViewController:weatherVC sender:self];
+        if (self.splitViewController.isCollapsed) {
+            [self.splitViewController showDetailViewController:weatherVC sender:self];
+        }
+        else {
+            UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:weatherVC];
+            [self.splitViewController showDetailViewController:nav sender:self];
+        }
     }
 }
 
@@ -66,5 +79,10 @@ NSString* weatherController = @"Weather Info";
 -(BOOL) splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
     return YES;
 }
+
+
+
+
+
 
 @end

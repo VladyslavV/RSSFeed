@@ -12,7 +12,7 @@
 #import "ImageViewerVC.h"
 #import "ImageViewerViewModel.h"
 
-@interface FeedViewDetailVC ()
+@interface FeedViewDetailVC () <UIPopoverPresentationControllerDelegate>
 
 @property (strong, nonatomic) FeedDetailViewModel* feedDetailViewModel;
 @property (strong, nonatomic) FeedViewDetailMainView* mainView;
@@ -76,16 +76,20 @@
 -(void) shareToMedia:(NSURL *)newsLink {
     NSArray* itemsToShare = @[newsLink];
     UIActivityViewController * activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
-    
+    activityVC.popoverPresentationController.delegate = self;
     activityVC.excludedActivityTypes = @[UIActivityTypeMail,
                                          UIActivityTypeAirDrop,
                                          UIActivityTypeMessage,
                                          UIActivityTypePostToVimeo,
                                          UIActivityTypeOpenInIBooks,
                                          ];
+    
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
-
-
+- (void)prepareForPopoverPresentation:(UIPopoverPresentationController *)popoverPresentationController {
+   // [popoverPresentationController setPermittedArrowDirections:0];
+   // popoverPresentationController.sourceRect = self.mainView.shareSocialButton.frame;
+    popoverPresentationController.sourceView = self.mainView.shareSocialButton;
+}
 @end

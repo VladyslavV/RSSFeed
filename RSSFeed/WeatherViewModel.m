@@ -10,11 +10,16 @@
 #import "FetcherForWeather.h"
 #import "WeatherCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SVProgressHUD/SVProgressHUD.h>
+#import "DBCityRealm.h"
 
 @interface WeatherViewModel()
 
 @property (strong, nonatomic) FetcherForWeather* fetcher;
 @property (strong, nonatomic) Cities* model;
+
+
+@property (strong, nonatomic) RLMResults<DBCityRealm *> *realmCities;
 
 @end
 
@@ -24,6 +29,17 @@ NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6
 
 -(void)setModel:(Cities *)model {
     _model = model;
+    
+#warning Realm
+    [DBCityRealm clearRealm];
+    [DBCityRealm createDBModelWithMantleModel:self.model];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.realmCities = [DBCityRealm allObjects];
+    });
+}
+
+-(void)setRealmCities:(RLMResults<DBCityRealm *> *)realmCities {
+    _realmCities = realmCities;
     [self.delegate modelWasUpdated];
 }
 
@@ -46,28 +62,48 @@ NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.model.array.count;
+    return self.realmCities? self.realmCities.count : 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WeatherCell * cell = [tableView dequeueReusableCellWithIdentifier:@"WeatherCell"];
-    City* city = self.model.array[indexPath.row];
-    cell.cityLabel.text = [NSString stringWithFormat:@"%@, %@", city.name, city.country];
-    cell.temperatureLabel.text =  [NSString stringWithFormat:@"Temp: %ld°C ", lroundf(city.temperature)];
-    cell.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %ld", lroundf(city.humidity)];
-    cell.conditionLabel.text = [NSString stringWithFormat:@"Condition: %@", city.weather.condition];
-    //capitalize first letter
-    NSString* description = [city.weather.detailed stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[city.weather.detailed substringToIndex:1] uppercaseString]];
-    cell.detailLabel.text = [NSString stringWithFormat:@"Description: %@", description];
+    //City* city = self.model.array[indexPath.row];
+    
+    if (self.realmCities) {
+        DBCityRealm* city = self.realmCities[indexPath.row];
+        
+        cell.cityLabel.text = [NSString stringWithFormat:@"%@, %@", city.name, city.country];
+        cell.temperatureLabel.text =  [NSString stringWithFormat:@"Temp: %ld°C ", lroundf(city.temperature)];
+        cell.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %ld", lroundf(city.humidity)];
+        cell.conditionLabel.text = [NSString stringWithFormat:@"Condition: %@", city.condition];
+        //capitalize first letter
+        NSString* description = [city.detailed stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[city.detailed substringToIndex:1] uppercaseString]];
+        cell.detailLabel.text = [NSString stringWithFormat:@"Description: %@", description];
+    }
+    
     return cell;
 }
 
+
 -(void)tableView:(UITableView *)tableView willDisplayCell:(WeatherCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    City* city = self.model.array[indexPath.row];
-    NSString * stringURL = [NSString stringWithFormat:@"http://openweathermap.org/img/w/%@.png", city.weather.icon];
-    cell.weatherIconImageView.image = nil;
-    [cell.weatherIconImageView sd_setImageWithURL:[NSURL URLWithString:stringURL]placeholderImage:[UIImage imageNamed:@"weatherPlaceholder"]];
+    // City* city = self.model.array[indexPath.row];
+    
+    if (self.realmCities) {
+        DBCityRealm* city = self.realmCities[indexPath.row];
+        
+        NSString * stringURL = [NSString stringWithFormat:@"http://openweathermap.org/img/w/%@.png", city.icon];
+        [cell.weatherIconImageView setContentMode:UIViewContentModeScaleAspectFit];
+        cell.weatherIconImageView.image = nil;
+        [cell.weatherIconImageView sd_setImageWithURL:[NSURL URLWithString:stringURL]placeholderImage:[UIImage imageNamed:@"weatherPlaceholder"]];
+    }
 }
+
+
+-(void) stopAllTasks {
+    [self.fetcher cancelDownloading];
+}
+
+
 
 
 

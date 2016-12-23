@@ -10,6 +10,7 @@
 #import <AFNetworking.h>
 #import "WeatherMainView.h"
 #import "WeatherViewModel.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface WeatherVC () <WeatherViewModelDelegate>
 
@@ -46,8 +47,6 @@
     [self.view addSubview:self.mainView];
     [self.viewModel loadWeatherFromWeb];
     
-    self.navigationItem.backBarButtonItem.title = @"f";
-    
 }
 
 #pragma mark - View Model Delegate
@@ -56,6 +55,13 @@
     [self.mainView updateView];
 }
 
+-(void)viewDidLayoutSubviews {
+    [self.mainView updateConstraints];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [self.viewModel stopAllTasks];
+}
 
 
 

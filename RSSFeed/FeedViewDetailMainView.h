@@ -19,6 +19,7 @@
 
 @property(weak, nonatomic) id <FeedViewDetailMainViewDelegate> delegate;
 
+@property (strong, nonatomic) UIButton* shareSocialButton;
 
 @property (strong, nonatomic) UIBarButtonItem* barButtonOpenInSafari;
 @property (strong, nonatomic) UIImageView* newsImageView;

@@ -9,7 +9,6 @@
 #import "WeatherMainView.h"
 #import "Masonry.h"
 #import "WeatherCell.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface WeatherMainView() <UITableViewDelegate, UITableViewDataSource>
 
@@ -48,30 +47,20 @@
         [self addSubview:self.tableView];
         UINib *nib = [UINib nibWithNibName:@"WeatherCell" bundle:nil];
         [self.tableView registerNib:nib forCellReuseIdentifier:@"WeatherCell"];
-        
     }
     return self;
 }
 
--(void) layoutSubviews {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
-    
-    [SVProgressHUD setMinimumSize:self.superview.frame.size];
-    [SVProgressHUD show];
-    
-    
-    self.tableView.frame = self.bounds;
+-(void) updateConstraints {
+    self.frame = self.superview.frame;
+    self.tableView.frame = self.frame;
+    [super updateConstraints];
 }
 
 -(void) updateView {
-    [SVProgressHUD dismiss];
     [self.tableView reloadData];
 }
 
--(void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    self.frame = self.superview.frame;
-    self.tableView.frame = self.frame;
-}
 
 #pragma mark - Table View
 
@@ -90,5 +79,6 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
 }
+
 
 @end
