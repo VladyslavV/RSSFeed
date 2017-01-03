@@ -10,7 +10,7 @@
 #import "FeedViewController.h"
 #import "WeatherVC.h"
 
-@interface SplitMasterTVC () 
+@interface SplitMasterTVC ()
 
 @end
 
@@ -51,7 +51,7 @@ NSString* weatherController = @"Weather Info";
 }
 
 -(void) createControllerWithTitle:(NSString*) title {
-
+    
     if ([title isEqualToString:rssController]) {
         FeedViewController* feedViewController = [FeedViewController new];
         if (self.splitViewController.isCollapsed) {

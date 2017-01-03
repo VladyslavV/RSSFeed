@@ -46,7 +46,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.mainView];
     [self.viewModel loadWeatherFromWeb];
-    
+    self.navigationItem.title = NSLocalizedString(@"weathervc.navigation.title", nil);
 }
 
 #pragma mark - View Model Delegate
@@ -62,7 +62,6 @@
 -(void)viewWillDisappear:(BOOL)animated {
     [self.viewModel stopAllTasks];
 }
-
 
 
 @end

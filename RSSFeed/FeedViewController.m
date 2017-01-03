@@ -17,6 +17,7 @@
 //ViewModel
 @property (strong, nonatomic) FeedViewModel* feedViewModel;
 
+@property (nonatomic, copy) void (^memoryLeakBlock)();
 
 @end
 
@@ -76,12 +77,33 @@
     [self.view addSubview:self.feedView];
     [self.feedViewModel loadModelFromWeb];
     self.navigationItem.title = NSLocalizedString(@"navigationbar.main.title", nil);
+    
+//    self.memoryLeakBlock = ^{
+//        [self method111];
+//    };
+    
+//    [self gggg:^int (int hh) {
+//        int g = 6 + hh;
+//        return g;
+//    }];
 }
 
+
+//-(void) gggg:( int (^) (int hh) ) block {
+//    int g = block(0);
+//    int g1 = block(g + 6);
+//}
+
+
+-(void) method111 {
+    NSLog(@"hi there");
+}
 
 -(void) viewDidAppear:(BOOL)animated {
     [self.feedView updateView];
 }
 
-
+- (void)dealloc {
+    NSLog(@"dealloc vc %@", NSStringFromClass([self class]));
+}
 @end

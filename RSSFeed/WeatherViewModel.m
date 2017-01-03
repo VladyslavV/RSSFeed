@@ -25,7 +25,7 @@
 
 @implementation WeatherViewModel
 
-NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6942553,2147714,5128581,524901,703448,2643743&units=metric&appid=4024a343a62743770c16424ec74479c6";
+NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6942553,2147714,5128581,524901,703448,2643743,4927854,4539726,4561542,4188377,4921476,107968&units=metric&appid=4024a343a62743770c16424ec74479c6";
 
 -(void)setModel:(Cities *)model {
     _model = model;
@@ -73,7 +73,7 @@ NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6
         DBCityRealm* city = self.realmCities[indexPath.row];
         
         cell.cityLabel.text = [NSString stringWithFormat:@"%@, %@", city.name, city.country];
-        cell.temperatureLabel.text =  [NSString stringWithFormat:@"Temp: %ld°C ", lroundf(city.temperature)];
+        cell.temperatureLabel.text =  [NSString stringWithFormat:@"Tempreture: %ld°C ", lroundf(city.temperature)];
         cell.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %ld", lroundf(city.humidity)];
         cell.conditionLabel.text = [NSString stringWithFormat:@"Condition: %@", city.condition];
         //capitalize first letter
@@ -92,12 +92,16 @@ NSString* stringURL = @"http://api.openweathermap.org/data/2.5/group?id=706483,6
         DBCityRealm* city = self.realmCities[indexPath.row];
         
         NSString * stringURL = [NSString stringWithFormat:@"http://openweathermap.org/img/w/%@.png", city.icon];
-        //[cell.weatherIconImageView setContentMode:UIViewContentModeScaleAspectFit];
+        //set aspect fit for the placeholder
+        [cell.weatherIconImageView setContentMode:UIViewContentModeScaleAspectFit];
         cell.weatherIconImageView.image = nil;
-        [cell.weatherIconImageView sd_setImageWithURL:[NSURL URLWithString:stringURL]placeholderImage:[UIImage imageNamed:@"weatherPlaceholder"]];
+        [cell.weatherIconImageView sd_setImageWithURL:[NSURL URLWithString:stringURL]placeholderImage:[UIImage imageNamed:@"weatherPlaceholder"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [cell.weatherIconImageView setContentMode:UIViewContentModeCenter];
+        }];
+        
+     
     }
 }
-
 
 -(void) stopAllTasks {
     [self.fetcher cancelDownloading];

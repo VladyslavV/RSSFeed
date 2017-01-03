@@ -209,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				31B609B11E098B04007EB487 /* Custom Views */,
-				31B609A91E098595007EB487 /* Xibs */,
+				31B609A91E098595007EB487 /* Custom Xibs */,
 				31290F4A1E081AEB0094D562 /* WeatherVC.h */,
 				31290F4B1E081AEB0094D562 /* WeatherVC.m */,
 				31290F591E08232E0094D562 /* WeatherMainView.h */,
@@ -312,13 +312,13 @@
 			name = "Mantle Model";
 			sourceTree = "<group>";
 		};
-		31B609A91E098595007EB487 /* Xibs */ = {
+		31B609A91E098595007EB487 /* Custom Xibs */ = {
 			isa = PBXGroup;
 			children = (
 				31B609AA1E09864D007EB487 /* WeatherTVC.xib */,
 				31B609AE1E098AF8007EB487 /* WeatherCell.xib */,
 			);
-			name = Xibs;
+			name = "Custom Xibs";
 			sourceTree = "<group>";
 		};
 		31B609B11E098B04007EB487 /* Custom Views */ = {
